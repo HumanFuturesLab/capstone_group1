@@ -5,6 +5,7 @@
  * @format
  */
 
+/*
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
@@ -76,6 +77,9 @@ function App(): JSX.Element {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
+          <Section title="I'm Gonna Keep My Stuff Up Here">
+            <Text>I know how to add stuff</Text>
+          </Section>
           <Section title="Step One">
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
             screen and then come back to see your edits.
@@ -114,5 +118,51 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
 });
+
+export default App;
+*/
+
+// In App.js in a new project
+
+import * as React from 'react';
+import { View, Text, Button } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import SignIn from './Screens/SignIn';
+import SignUp from './Screens/SignUp';
+import UserHome from './Screens/UserHome';
+import CorporateHome from './Screens/CorporateHome';
+import AdminHome from './Screens/AdminHome';
+
+const Stack = createNativeStackNavigator();
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Sign In" component={SignIn} />
+        <Stack.Screen name="Sign Up" component={SignUp} />
+        <Stack.Screen name="UserHome" component={UserHome} 
+          options={{
+            headerTitle: 'User Home',
+            headerBackVisible: false,
+          }}  
+        />
+        <Stack.Screen name="CorporateHome" component={CorporateHome} 
+          options={{
+            headerTitle: 'Corporate Home',
+            headerBackVisible: false,
+          }}  
+        />
+        <Stack.Screen name="AdminHome" component={AdminHome} 
+          options={{
+            headerTitle: 'Admin Home',
+            headerBackVisible: false,
+          }}  
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
 
 export default App;
