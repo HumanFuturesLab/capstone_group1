@@ -109,6 +109,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Config.LOAD_STORYBOOK === 'false' ? StorybookUI : App;
-
+export default Config.LOAD_STORYBOOK === 'true' ? StorybookUI : App;
+//export default StorybookUI;
 // export default App;
