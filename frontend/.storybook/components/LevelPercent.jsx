@@ -1,6 +1,4 @@
 import { Text, View, StyleSheet } from "react-native";
-import Svg, { Circle, Image } from 'react-native-svg';
-
 
 export const LevelPercent = ({level, percent}) => {
     return (

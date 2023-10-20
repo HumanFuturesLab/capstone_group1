@@ -1,4 +1,4 @@
-import { LevelPercent } from "./LevelPercent";
+import { LevelPercent } from "../components/LevelPercent";
 
 export default {
     title: 'LevelPercent',

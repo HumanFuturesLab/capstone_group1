@@ -47,7 +47,11 @@ try {
 
 const getStories = () => {
   return {
-    './.storybook/stories/Button/Button.stories.js': require('./stories/Button/Button.stories.js'),
+    './.storybook/stories/Button.stories.js': require('./stories/Button.stories.js'),
+    './.storybook/stories/Level.stories.jsx': require('./stories/Level.stories.jsx'),
+    './.storybook/stories/LevelCircle.stories.jsx': require('./stories/LevelCircle.stories.jsx'),
+    './.storybook/stories/LevelPercent.stories.jsx': require('./stories/LevelPercent.stories.jsx'),
+    './.storybook/stories/CoinDisplayer.stories.jsx': require('./stories/CoinDisplayer.stories.jsx')
   };
 };
 

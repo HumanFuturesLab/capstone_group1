@@ -1,5 +1,4 @@
 import { Text, View, StyleSheet } from "react-native";
-import Svg, { Circle, Image } from 'react-native-svg';
 //import { styles } from "./styles";
 
 export const LevelCircle = ({level, bgColor}) => {

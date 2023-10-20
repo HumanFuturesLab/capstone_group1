@@ -1,4 +1,4 @@
-import { LevelCircle } from "./LevelCircle";
+import { LevelCircle } from "../components/LevelCircle";
 
 export default {
     title: 'LevelCircle',

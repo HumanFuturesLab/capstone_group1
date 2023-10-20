@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { MyButton } from './Button';
+import { MyButton } from '../components/Button';
 
 const MyButtonMeta = {
   title: 'MyButton',

@@ -17,14 +17,13 @@ export const CoinDisplayer = ({numberOfCoins}) => {
                     stroke="black"
                     strokeWidth="2"
                 />
-                </Svg>
-                <SvgXml
-                    width="40%"
-                    height="40%"
-                    xml={xml}
-                    style={styles.svgx}>
-                        
-                </SvgXml>
+            </Svg>
+            <SvgXml
+                width="40%"
+                height="40%"
+                xml={xml}
+                style={styles.svgx}>
+            </SvgXml>
             
             <View style={styles.coinCount}>
                 <Text style={styles.coinText}>{numberOfCoins}</Text>

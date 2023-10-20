@@ -1,4 +1,4 @@
-import { Level } from "./Level";
+import { Level } from "../components/Level";
 
 export default {
     title: "Level",

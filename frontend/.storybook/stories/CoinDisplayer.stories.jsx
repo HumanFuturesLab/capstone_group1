@@ -1,4 +1,4 @@
-import { CoinDisplayer } from "./CoinDisplayer";
+import { CoinDisplayer } from "../components/CoinDisplayer";
 
 export default {
     title: 'CoinDisplayer',
