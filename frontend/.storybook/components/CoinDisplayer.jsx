@@ -1,5 +1,6 @@
 import { Text, View, StyleSheet } from "react-native";
 import Svg, { Circle, Image, SvgUri, SvgXml } from 'react-native-svg';
+import Coin from '../imgs/coin.svg';
 
 export const CoinDisplayer = ({numberOfCoins}) => {
     const xml = `<svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -18,6 +19,7 @@ export const CoinDisplayer = ({numberOfCoins}) => {
                     strokeWidth="2"
                 />
             </Svg>
+            
             <SvgXml
                 width="40%"
                 height="40%"
@@ -37,7 +39,7 @@ const styles = StyleSheet.create({
     svgx: {
         position: 'absolute',
         //top: '20%',
-        left: '-12%',
+        left: '-12.25%',
         //transform: [{translateX: 50}, {translateY: 50}],
         
     },

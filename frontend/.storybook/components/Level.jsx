@@ -5,7 +5,7 @@ export const Level = ({level}) => {
         <View style={levelStyles.container}>
             <View style={levelStyles.extraContainer}>
                 <Text style={levelStyles.text}>{level}</Text>
-                <Text>Level</Text>
+                <Text>LEVEL</Text>
             </View>
         </View>
     )
@@ -23,6 +23,7 @@ const levelStyles = StyleSheet.create({
         //borderColor: 'black',
         //borderWidth: 2,
         padding: 10,
+        alignItems: 'center',
     },
     textlines: {
         flexDirection: 'row',

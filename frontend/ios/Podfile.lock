@@ -506,7 +506,7 @@ PODS:
     - React-Core
   - RNDateTimePicker (7.6.1):
     - React-Core
-  - RNSVG (13.14.0):
+  - RNSVG (13.9.0):
     - React-Core
   - SimpleKeychain (1.1.0)
   - SocketRocket (0.6.1)
@@ -760,7 +760,7 @@ SPEC CHECKSUMS:
   ReactCommon: 4b2bdcb50a3543e1c2b2849ad44533686610826d
   RNCAsyncStorage: c913ede1fa163a71cea118ed4670bbaaa4b511bb
   RNDateTimePicker: 8fb39263b721223e095248acaf6f406d5b7f6713
-  RNSVG: d00c8f91c3cbf6d476451313a18f04d220d4f396
+  RNSVG: 53c661b76829783cdaf9b7a57258f3d3b4c28315
   SimpleKeychain: f8707c8e97b38c6a6e687b17732afc9bcef06439
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 3efc43e0d48686ce2e8c60f99d4e6bd349aff981
@@ -768,4 +768,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: f061f7fed325ae0438e68f8aa5763cac319a3d10
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.13.0

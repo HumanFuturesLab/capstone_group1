@@ -29,6 +29,7 @@ const levelPercentStyles = StyleSheet.create({
         borderColor: 'black',
         borderWidth: 2,
         padding: 10,
+        alignItems: 'center',
     },
     textlines: {
         flexDirection: 'row',
