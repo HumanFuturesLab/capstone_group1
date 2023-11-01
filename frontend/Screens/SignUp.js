@@ -9,6 +9,7 @@ import {
 const SignUp = ({navigation}) => {
     return(
         <View>
+            <Text>Sign up</Text>
             <Button
                 title="Back to Sign In"
                 onPress={() => navigation.goBack()}
