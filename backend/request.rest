@@ -82,3 +82,13 @@ Content-Type: application/json
 ####
 
 GET http://localhost:3000/reward
+
+####
+
+POST http://localhost:3000/redeem
+Content-Type: application/json
+
+{
+    "rewardId": 146,
+    "userId": 2
+}

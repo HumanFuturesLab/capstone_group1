@@ -224,6 +224,43 @@ app.post('/reward', (req, res) => {
     res.status(code).send(response)
 })
 
+//Attempts to purchase reward for given user
+app.post('/redeem', (req, res) => {
+    const redemption = { rewardId: req.body.rewardId, userId: req.body.userId }
+
+    var code = 501
+    var response = "An internal error has occurred"
+
+    while(true) {
+
+        if(!userExists(redemption.userId)) {
+            code = 401
+            response = "User does not exist"
+            break
+        }
+        if(rewardExists(redemption.rewardId) == -1) {
+            code = 401
+            response = "Reward does not exist"
+            break
+        }
+
+        if(users[userGet(redemption.userId)].points >= rewards[rewardExists(redemption.rewardId)].cost) {
+            users[userGet(redemption.userId)].points -= rewards[rewardExists(redemption.rewardId)].cost
+            code = 201
+            response = "Reward redeemed"
+            break
+        } else {
+            code = 401
+            response = "User does not have enough points"
+            break
+        }
+
+        break
+    }
+
+    res.status(code).send(response)
+})
+
 app.listen(3000)
 
 
@@ -258,5 +295,13 @@ function signupExists(userId, eventId) {
 //Takes reward id and returns index if it exists, or -1 if it doesn't
 function rewardExists(rewardId) {
     for(var i = 0; i < rewards.length; i++) if(rewards[i].id == rewardId) return i
+    return -1
+}
+
+function userGet(givenId) {
+    for(var i = 0; i < users.length; i++) {
+        var element = users[i]
+        if(element.id == givenId) return i
+    }
     return -1
 }
