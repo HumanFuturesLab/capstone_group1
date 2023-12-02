@@ -42,9 +42,10 @@ const startApi = async () => {
         }
 
         let UsersJOINOrders = await client.query(
-          "SELECT rewardID FROM Orders WHERE Orders.userID = '" + param + "';"
+          `SELECT rewardID FROM Orders WHERE Orders.userID = '$1';`,
+          [param]
         );
-
+        // fix this later
         let OrdersJOINRewards = await client.query(
           "SELECT Rewards.pointcost FROM Rewards JOIN Orders ON Rewards.rewardID = '" +
             UsersJOINOrders["rows"][0]["rewardid"] +
@@ -52,6 +53,23 @@ const startApi = async () => {
         );
 
         res.json(OrdersJOINRewards["rows"]);
+      });
+
+      app.get("/posts/:id", async (req, res) => {
+        let posts = await client.query(
+          `SELECT * FROM Posts WHERE Posts.userID = '${req.params.id}'`
+        );
+
+        res.json({ data: posts.rows });
+      });
+
+      app.get("/events/:id", async (req, res) => {
+        let eventIDs = await client.query(
+          `SELECT signups.eventID FROM signups WHERE signups.userID = $1`,
+          [req.params.id]
+        );
+
+        let events = await client.query(`SELECT * FROM events WHERE `);
       });
 
       app.listen(3000, () => {
