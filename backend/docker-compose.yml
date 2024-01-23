@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: gleo
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./dataset:/docker-entrypoint-initdb.d
+
+volumes:
+  postgres-data:
+
+# psql -h localhost -p 5432 -d gleo -U postgres

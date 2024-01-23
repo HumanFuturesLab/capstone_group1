@@ -28,6 +28,9 @@ import {
 
 import {useAuth0, Auth0Provider} from 'react-native-auth0';
 
+import StorybookUI from './.storybook';
+import Config from 'react-native-config';
+
 const Home = () => {
   const {authorize, clearSession, user, getCredentials, error, isLoading} =
     useAuth0();
@@ -106,4 +109,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default Config.LOAD_STORYBOOK === 'true' ? StorybookUI : App;
+// export default App;
