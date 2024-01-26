@@ -25,7 +25,22 @@ Windows Android:
 ```
 
 ### Backend Start
-#### Navigate to the backend fold, then use the following commands:
+#### Installing the needed files (Only do this the first time)
+Mac IOS:
+```
+*** WIP ***
+```
+Windows:
+```
+npm i express
+npm i --save-dev nodemon
+```
+#### Running the backend (Do this every time)
+Mac IOS:
+```
+*** WIP ***
+```
+Windows:
 ```
 npm run devStart
 ```
