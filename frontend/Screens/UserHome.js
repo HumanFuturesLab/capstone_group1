@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, View, Image } from 'react-native'
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import dashboardIcon from '../Images/dashboardIcon.png'
@@ -6,17 +6,13 @@ import townIcon from '../Images/townIcon.png'
 import activityIcon from '../Images/activityIcon.png'
 import rewardsIcon from '../Images/rewardsIcon.png'
 import profileIcon from '../Images/profileIcon.png'
-
-// import screens
 import ActivityCentre from './ActivitiyCenter.js';
 import Dashboard from './Dashboard.js';
-import Profile from './Profile.js';
+import Profile from './Profile.tsx';
 import Rewards from './Rewards.js';
 import TownSquare from './TownSquare.js';
-//import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Tab = createBottomTabNavigator();
-//const Tab = createNativeStackNavigator();
 
 const UserHome = () => {
   return (
