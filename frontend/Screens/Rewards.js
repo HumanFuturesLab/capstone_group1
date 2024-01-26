@@ -1,6 +1,5 @@
-import { StyleSheet, Text, View, ImageBackground } from 'react-native'
+import { StyleSheet, View, ImageBackground } from 'react-native'
 import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import background from '../Images/rewards.jpg'
 
 const Rewards = (route) => {

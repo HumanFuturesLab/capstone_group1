@@ -1,23 +1,12 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import TabNavigator from './screens/TabNavigator';
-import {enableScreens} from 'react-native-screens';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import type {PropsWithChildren} from 'react';
-import {
-  Button,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {Button, StyleSheet, Text, View} from 'react-native';
 import {useAuth0, Auth0Provider} from 'react-native-auth0';
 import StorybookUI from './.storybook';
 import Config from 'react-native-config';
+import UserHome from './screens/UserHome';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,12 +25,6 @@ const Home = () => {
     console.log(credentials);
   };
 
-  const loggedIn = user !== undefined && user !== null;
-
-  // const onLogout = async () => {
-  //   await clearSession({}, {});
-  // };
-
   if (isLoading) {
     return (
       <View style={styles.container}>
@@ -52,13 +35,12 @@ const Home = () => {
 
   return (
     <>
-      {/* <Text style={styles.header}> Auth0Sample - Login </Text> */}
       {user && (
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen
               name="TabNavigator"
-              component={TabNavigator}
+              component={UserHome}
               options={{headerShown: false}}
             />
           </Stack.Navigator>
@@ -81,12 +63,6 @@ const App = () => {
   );
 };
 
-// const styles = StyleSheet.create({})
-
-//   const backgroundStyle = {
-//     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-//   };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -107,4 +83,3 @@ const styles = StyleSheet.create({
 });
 
 export default Config.LOAD_STORYBOOK === 'false' ? StorybookUI : App;
-// export default App;

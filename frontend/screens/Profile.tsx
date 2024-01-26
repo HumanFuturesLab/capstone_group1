@@ -1,14 +1,12 @@
-import {Button, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {Button, SafeAreaView, StyleSheet, Text} from 'react-native';
 import React from 'react';
 import {useAuth0} from 'react-native-auth0';
 
 const Profile = () => {
-  const {clearSession, user, isLoading} = useAuth0();
+  const {clearSession} = useAuth0();
   const onLogout = async () => {
     await clearSession({}, {});
   };
-
-  const loggedIn = user !== undefined && user !== null;
 
   return (
     <SafeAreaView>

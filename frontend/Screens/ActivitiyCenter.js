@@ -1,21 +1,18 @@
-import { StyleSheet, Text, View, ImageBackground } from 'react-native'
-import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import background from '../Images/activityCenter.jpg'
+import {StyleSheet, View, ImageBackground} from 'react-native';
+import React from 'react';
+import background from '../Images/activityCenter.jpg';
 
-const ActivityCentre = (route) => {
+const ActivityCentre = () => {
   return (
     <View style={styles.root}>
       <ImageBackground
-        source = {background}
-        style = {styles.backgroundImage}
-      >
-      </ImageBackground>
+        source={background}
+        style={styles.backgroundImage}></ImageBackground>
     </View>
-  )
-}
+  );
+};
 
-export default ActivityCentre
+export default ActivityCentre;
 
 const styles = StyleSheet.create({
   root: {
@@ -29,4 +26,4 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-})
+});
