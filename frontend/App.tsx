@@ -1,11 +1,9 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
+import 'react-native-gesture-handler';
 import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import TabNavigator from './screens/TabNavigator';
+import {enableScreens} from 'react-native-screens';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import type {PropsWithChildren} from 'react';
 import {
   Button,
@@ -17,19 +15,11 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
 import {useAuth0, Auth0Provider} from 'react-native-auth0';
-
 import StorybookUI from './.storybook';
 import Config from 'react-native-config';
+
+const Stack = createNativeStackNavigator();
 
 const Home = () => {
   const {authorize, clearSession, user, getCredentials, error, isLoading} =
@@ -48,9 +38,9 @@ const Home = () => {
 
   const loggedIn = user !== undefined && user !== null;
 
-  const onLogout = async () => {
-    await clearSession({}, {});
-  };
+  // const onLogout = async () => {
+  //   await clearSession({}, {});
+  // };
 
   if (isLoading) {
     return (
@@ -61,26 +51,27 @@ const Home = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}> Auth0Sample - Login </Text>
-      {user && <Text>You are logged in as {user.name}</Text>}
+    <>
+      {/* <Text style={styles.header}> Auth0Sample - Login </Text> */}
+      {user && (
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="TabNavigator"
+              component={TabNavigator}
+              options={{headerShown: false}}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      )}
       {!user && <Text>You are not logged in</Text>}
-      <Button
-        onPress={loggedIn ? onLogout : onLogin}
-        title={loggedIn ? 'Log Out' : 'Log In'}
-      />
+      {!user && <Button onPress={onLogin} title={'Log In'} />}
       {error && <Text style={styles.error}>{error.message}</Text>}
-    </View>
+    </>
   );
 };
 
-function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
+const App = () => {
   return (
     <Auth0Provider
       domain={'dev-tn5qd8swaoxt8gn0.us.auth0.com'}
@@ -88,7 +79,13 @@ function App(): JSX.Element {
       <Home />
     </Auth0Provider>
   );
-}
+};
+
+// const styles = StyleSheet.create({})
+
+//   const backgroundStyle = {
+//     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+//   };
 
 const styles = StyleSheet.create({
   container: {
@@ -109,5 +106,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Config.LOAD_STORYBOOK === 'true' ? StorybookUI : App;
+export default Config.LOAD_STORYBOOK === 'false' ? StorybookUI : App;
 // export default App;
