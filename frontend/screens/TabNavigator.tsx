@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 // import screens
 import ActivityCentre from './ActivityCentre';
@@ -22,9 +22,9 @@ const TabNavigator = () => {
       <Tab.Screen name="ActivityCentre" component={ActivityCentre} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
-  )
-}
+  );
+};
 
-export default TabNavigator
+export default TabNavigator;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
