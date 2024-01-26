@@ -11,7 +11,7 @@ const Profile = () => {
   return (
     <SafeAreaView>
       <Text>Profile</Text>
-      <Button onPress={onLogout} title={'Log Out!'} />
+      <Button onPress={onLogout} title={'Log Out'} />
     </SafeAreaView>
   );
 };
