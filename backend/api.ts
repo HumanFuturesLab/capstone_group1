@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { Pool, Client } from "pg";
-import { UUID } from "bson";
+// import { UUID } from "bson";
 
 // express app
 const app = express();
@@ -22,7 +22,8 @@ const startApi = async () => {
       console.error("connected");
 
       function isValidObjectId(id: string): boolean {
-        return UUID.isValid(id);
+        return false;
+        // return UUID.isValid(id);
       }
 
       // Return data object of users
@@ -74,7 +75,7 @@ const startApi = async () => {
 
         res.json({ data: posts.rows });
       });
-
+      // incomplete
       app.get("/events/:id", async (req, res) => {
         let eventIDs = await client.query(
           `SELECT signups.eventID FROM signups WHERE signups.userID = $1`,
