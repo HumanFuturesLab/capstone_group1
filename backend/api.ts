@@ -55,6 +55,18 @@ const startApi = async () => {
         res.json(OrdersJOINRewards["rows"]);
       });
 
+      app.get("/rewards", async (req, res) => {
+        // if (!isValidObjectId(param)) {
+        //   res.status(400);
+        //   res.json({ data: "Invalid ID" });
+        //   return;
+        // }
+
+        let allRewards = await client.query("SELECT * FROM rewards;");
+
+        res.json({ data: allRewards["rows"] });
+      });
+
       app.get("/posts/:id", async (req, res) => {
         let posts = await client.query(
           `SELECT * FROM Posts WHERE Posts.userID = '${req.params.id}'`
