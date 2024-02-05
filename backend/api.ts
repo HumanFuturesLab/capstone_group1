@@ -72,6 +72,46 @@ const startApi = async () => {
         let events = await client.query(`SELECT * FROM events WHERE `);
       });
 
+      // get all events for display
+      app.get("/events", async (req, res) => {
+        let allEvents = await client.query("SELECT * FROM events;");
+        res.json({ data: allEvents.rows });
+      });
+
+      app.post("/events", async (req, res) => {
+        // Assuming you have middleware like app.use(express.json()) to parse JSON bodies
+        const { eventDate, pointReward, popMin, popMax, adminID, location } =
+          req.body;
+
+        const query = `
+          INSERT INTO Events(eventDate, pointReward, popMin, popMax, adminID, location) 
+          VALUES($1, $2, $3, $4, $5, $6)
+          RETURNING *;
+        `;
+
+        try {
+          const result = await client.query(query, [
+            eventDate,
+            pointReward,
+            popMin,
+            popMax,
+            adminID,
+            location,
+          ]);
+
+          // Check if the insert was successful and return the newly created event
+          if (result.rows && result.rows.length > 0) {
+            res.status(201).json(result.rows[0]); // Send the inserted event back to the client
+          } else {
+            // Handle the case where no rows were returned
+            res.status(500).send("Failed to create the event");
+          }
+        } catch (err: any) {
+          console.error("Error executing query:", err.message);
+          res.status(500).send("Server Error: Unable to create event");
+        }
+      });
+
       app.listen(3000, () => {
         console.log("listening on 3000");
       });
