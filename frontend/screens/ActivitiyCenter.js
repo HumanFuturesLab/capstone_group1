@@ -1,20 +1,18 @@
-import { StyleSheet, View, ImageBackground } from 'react-native'
-import React from 'react'
-import background from '../Images/townSquare.jpg'
+import {StyleSheet, View, ImageBackground} from 'react-native';
+import React from 'react';
+import background from '../Images/activityCenter.jpg';
 
-const TownSquare = () => {
+const ActivityCentre = () => {
   return (
     <View style={styles.root}>
       <ImageBackground
-        source = {background}
-        style = {styles.backgroundImage}
-      >
-      </ImageBackground>
+        source={background}
+        style={styles.backgroundImage}></ImageBackground>
     </View>
-  )
-}
+  );
+};
 
-export default TownSquare
+export default ActivityCentre;
 
 const styles = StyleSheet.create({
   root: {
@@ -28,4 +26,4 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-})
+});

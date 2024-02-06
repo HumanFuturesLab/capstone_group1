@@ -1,8 +1,8 @@
 import { StyleSheet, View, ImageBackground } from 'react-native'
 import React from 'react'
-import background from '../Images/dashboard3.jpg'
+import background from '../Images/rewards.jpg'
 
-const Dashboard = (route) => {
+const Rewards = (route) => {
   return (
     <View style={styles.root}>
       <ImageBackground
@@ -14,7 +14,7 @@ const Dashboard = (route) => {
   )
 }
 
-export default Dashboard
+export default Rewards
 
 const styles = StyleSheet.create({
   root: {

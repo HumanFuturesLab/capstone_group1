@@ -6,16 +6,16 @@ import {
     View
 } from 'react-native';
 
-const SignUp = ({navigation}) => {
+const CorporateHome = ({navigation}) => {
     return(
         <View>
-            <Text>Sign up</Text>
+            <Text>This is the corporate home page</Text>
             <Button
-                title="Back to Sign In"
+                title="Logout"
                 onPress={() => navigation.goBack()}
             />
         </View>
     )
 }
 
-export default SignUp;
+export default CorporateHome;

@@ -42,6 +42,8 @@ CREATE TABLE Admins (
 
 CREATE TABLE Events (
   eventID uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+  eventName VARCHAR(30),
+  eventDesc VARCHAR (200),
   eventDate date,
   pointReward int,
   popMin int,
@@ -53,6 +55,8 @@ CREATE TABLE Events (
 
 CREATE TABLE Rewards (
   rewardID uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+  rewardName VARCHAR (30),
+  rewardDesc VARCHAR (200),
   pointCost int,
   companyID uuid,
   numAvailable int,
@@ -132,8 +136,8 @@ VALUES ('Mark', 'Zuckerberg', 'markz', 'admin123', 'mark.zuckerberg@example.com'
 
 -- Inserting data into Events (assuming adminID is known or fetched)
 -- Example of fetching adminID
-INSERT INTO Events (eventDate, pointReward, popMin, popMax, adminID, location)
-VALUES ('2023-11-15', 50, 100, 500, (SELECT adminID FROM Admins WHERE username = 'markz'), 'Central Park');
+INSERT INTO Events (eventName, eventDesc, eventDate, pointReward, popMin, popMax, adminID, location)
+VALUES ('Cleanup', 'Cleaning trash', '2023-11-15', 50, 100, 500, (SELECT adminID FROM Admins WHERE username = 'markz'), 'Central Park');
 
 -- Inserting data into Posts (assuming userID is known or fetched)
 -- Example of fetching userID for 'John Doe'
@@ -143,11 +147,11 @@ VALUES ((SELECT userID FROM Users WHERE userName = 'johndoe'), 'Enjoying the sun
 
 -- Inserting data into Rewards (assuming companyID is known or fetched)
 -- Example of fetching companyID for 'Globex Corporation'
-INSERT INTO Rewards (pointCost, companyID, numAvailable)
-VALUES (200, (SELECT companyID FROM Company WHERE companyName = 'Globex Corporation'), 10);
+INSERT INTO Rewards (rewardName, rewardDesc, pointCost, companyID, numAvailable)
+VALUES ('Reward 1', 'Reward 1 Desc', 200, (SELECT companyID FROM Company WHERE companyName = 'Globex Corporation'), 10);
 
-INSERT INTO Rewards (pointCost, companyID, numAvailable)
-VALUES (150, (SELECT companyID FROM Company WHERE companyName = 'Acme Corporation'), 20);
+INSERT INTO Rewards (rewardName, rewardDesc, pointCost, companyID, numAvailable)
+VALUES ('Reward 2', 'Reward 2 Desc', 150, (SELECT companyID FROM Company WHERE companyName = 'Acme Corporation'), 20);
 
 -- Inserting data into Orders (assuming userID and rewardID are known or fetched)
 -- Example of fetching userID and rewardID
