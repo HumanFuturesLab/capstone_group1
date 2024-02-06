@@ -36,7 +36,9 @@ const ActivityDetails = ({activity}: ActivityProps) => {
       )}
 
       {activity.eventdesc && (
-        <Text style={styles.description}>{activity.eventdesc}</Text>
+        <Text style={styles.description}>
+          Description: {activity.eventdesc}
+        </Text>
       )}
 
       {activity.pointreward && (
