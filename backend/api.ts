@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { Pool, Client } from "pg";
-import { UUID } from "bson";
+// import { UUID } from "bson";
 
 // express app
 const app = express();
@@ -22,7 +22,8 @@ const startApi = async () => {
       console.error("connected");
 
       function isValidObjectId(id: string): boolean {
-        return UUID.isValid(id);
+        return false;
+        // return UUID.isValid(id);
       }
 
       // Return data object of users
@@ -55,6 +56,18 @@ const startApi = async () => {
         res.json(OrdersJOINRewards["rows"]);
       });
 
+      app.get("/rewards", async (req, res) => {
+        // if (!isValidObjectId(param)) {
+        //   res.status(400);
+        //   res.json({ data: "Invalid ID" });
+        //   return;
+        // }
+
+        let allRewards = await client.query("SELECT * FROM rewards;");
+
+        res.json({ data: allRewards["rows"] });
+      });
+
       app.get("/posts/:id", async (req, res) => {
         let posts = await client.query(
           `SELECT * FROM Posts WHERE Posts.userID = '${req.params.id}'`
@@ -62,7 +75,7 @@ const startApi = async () => {
 
         res.json({ data: posts.rows });
       });
-
+      // incomplete
       app.get("/events/:id", async (req, res) => {
         let eventIDs = await client.query(
           `SELECT signups.eventID FROM signups WHERE signups.userID = $1`,
@@ -70,6 +83,46 @@ const startApi = async () => {
         );
 
         let events = await client.query(`SELECT * FROM events WHERE `);
+      });
+
+      // get all events for display
+      app.get("/events", async (req, res) => {
+        let allEvents = await client.query("SELECT * FROM events;");
+        res.json({ data: allEvents.rows });
+      });
+
+      app.post("/events", async (req, res) => {
+        // Assuming you have middleware like app.use(express.json()) to parse JSON bodies
+        const { eventDate, pointReward, popMin, popMax, adminID, location } =
+          req.body;
+
+        const query = `
+          INSERT INTO Events(eventDate, pointReward, popMin, popMax, adminID, location) 
+          VALUES($1, $2, $3, $4, $5, $6)
+          RETURNING *;
+        `;
+
+        try {
+          const result = await client.query(query, [
+            eventDate,
+            pointReward,
+            popMin,
+            popMax,
+            adminID,
+            location,
+          ]);
+
+          // Check if the insert was successful and return the newly created event
+          if (result.rows && result.rows.length > 0) {
+            res.status(201).json(result.rows[0]); // Send the inserted event back to the client
+          } else {
+            // Handle the case where no rows were returned
+            res.status(500).send("Failed to create the event");
+          }
+        } catch (err: any) {
+          console.error("Error executing query:", err.message);
+          res.status(500).send("Server Error: Unable to create event");
+        }
       });
 
       app.listen(3000, () => {

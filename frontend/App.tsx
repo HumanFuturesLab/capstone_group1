@@ -1,18 +1,20 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Button, StyleSheet, Text, View} from 'react-native';
-import {useAuth0, Auth0Provider} from 'react-native-auth0';
+import Auth0, {useAuth0, Auth0Provider} from 'react-native-auth0';
 import StorybookUI from './.storybook';
 import Config from 'react-native-config';
 import UserHome from './screens/UserHome';
+import {Context} from './context';
 
 const Stack = createNativeStackNavigator();
 
 const Home = () => {
   const {authorize, clearSession, user, getCredentials, error, isLoading} =
     useAuth0();
+  const [userInfo, setUserInfo] = useState({...user});
 
   const onLogin = async () => {
     await authorize(
@@ -36,18 +38,27 @@ const Home = () => {
   return (
     <>
       {user && (
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
-              name="TabNavigator"
-              component={UserHome}
-              options={{headerShown: false}}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <Context.Provider value={userInfo}>
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen
+                name="TabNavigator"
+                component={UserHome}
+                options={{headerShown: false}}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </Context.Provider>
       )}
       {!user && <Text>You are not logged in</Text>}
-      {!user && <Button onPress={onLogin} title={'Log In'} />}
+      {!user && (
+        <Button
+          onPress={() => {
+            onLogin();
+          }}
+          title={'Log In'}
+        />
+      )}
       {error && <Text style={styles.error}>{error.message}</Text>}
     </>
   );
