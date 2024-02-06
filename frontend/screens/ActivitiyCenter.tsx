@@ -4,6 +4,8 @@ import ListView from '../components/ListView';
 
 export type Event = {
   eventid: string;
+  eventname: string;
+  eventdesc: string;
   eventdate: string;
   pointreward: number;
   popmin: number;
