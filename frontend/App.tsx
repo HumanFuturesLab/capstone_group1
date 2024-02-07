@@ -24,8 +24,8 @@ const Home = () => {
       },
       {},
     );
-    const credentials = await getCredentials();
-    console.log(credentials);
+    //const credentials = await getCredentials();
+    //console.log(credentials);
   };
 
   if (isLoading) {
@@ -81,8 +81,8 @@ const Home = () => {
 const App = () => {
   return (
     <Auth0Provider
-      domain={'dev-tn5qd8swaoxt8gn0.us.auth0.com'}
-      clientId={'pRAokchRzJYk61f6hyNJIYNlgmnjEM5r'}>
+      domain={'dev-mtz5ic1d3hbus7z1.us.auth0.com'}
+      clientId={'h38IkiKhR6CTkMF6DRm7kqH9CaK07NLN'}>
       <Home />
     </Auth0Provider>
   );

@@ -80,6 +80,9 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+
+        manifestPlaceholders = [auth0Domain: "dev-mtz5ic1d3hbus7z1.us.auth0.com", auth0Scheme: "${applicationId}.auth0"] 
+
     }
     signingConfigs {
         debug {
@@ -106,6 +109,7 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
+    implementation 'com.auth0.android:auth0:2.+'
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
