@@ -6,7 +6,7 @@ CREATE TABLE Users (
   nameFirst VARCHAR(30),
   nameLast VARCHAR(30),
   userName VARCHAR(30),
-  password VARCHAR(30),
+  accessToken VARCHAR(255),
   address VARCHAR(50),
   email VARCHAR(50),
   pointsCached int,
