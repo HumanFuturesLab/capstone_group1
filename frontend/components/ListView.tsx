@@ -1,10 +1,11 @@
 import React, {Component, useState} from 'react';
 import {Text, View, TouchableOpacity, StyleSheet, Alert} from 'react-native';
 import {Event} from '../screens/ActivitiyCenter';
+import {Reward} from '../screens/Rewards';
 import ActivityDetails from './ActivityDetails';
 type Props = {
-  data: Event[];
-};
+  data: Event[] | Reward[];
+}
 
 const ListView = ({data}: Props) => {
   const [displayDetails, setdisplayDetails] = useState<Boolean>(false);
@@ -16,7 +17,7 @@ const ListView = ({data}: Props) => {
         <View>
           {data.map((item, index) => (
             <TouchableOpacity
-              key={item.eventid}
+              key={item.eventid | item.rewardid}
               style={styles.container}
               onPress={() => {
                 setdisplayDetails(true);

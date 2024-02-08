@@ -2,43 +2,39 @@ import {StyleSheet, View, ImageBackground, Text} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import ListView from '../components/ListView';
 
-export type Event = {
-  eventid: string;
-  eventname: string;
-  eventdesc: string;
-  eventdate: string;
-  pointreward: number;
-  popmin: number;
-  popmax: number;
-  adminid: string;
-  location: string;
+export type Reward = {
+  rewardid: string;
+  rewardname: string;
+  rewarddesc: string;
+  pointcost: number;
+  companyid: string;
+  numavailable: number;
 };
 
-const getEventData = (
-  setEventsData: React.Dispatch<React.SetStateAction<Event[]>>,
+const getRewardsData = (
+  setRewardsData: React.Dispatch<React.SetStateAction<Reward[]>>,
 ) => {
-  fetch('http://localhost:3000/events')
+  fetch('http://localhost:3000/rewards')
     .then(async (response: Response) => {
       return await response.json();
     })
-    .then(result => setEventsData(result.data));
+    .then(result => setRewardsData(result.data));
 };
 
-const ActivityCentre = () => {
-  const [eventData, setEventsData] = useState<Event[]>([]);
+const Rewards = () => {
+  const [rewardData, setRewardsData] = useState<Reward[]>([]);
   useEffect(() => {
-    getEventData(setEventsData);
-    console.log(eventData);
+    getRewardsData(setRewardsData);
   }, []);
   return (
     <View style={styles.root}>
-      <Text style={styles.textStyle}>Activity Center</Text>
-      <ListView data={eventData} />
+      <Text style={styles.textStyle}>Rewards</Text>
+      <ListView data={rewardData} />
     </View>
   );
 };
 
-export default ActivityCentre;
+export default Rewards
 
 const styles = StyleSheet.create({
   root: {
