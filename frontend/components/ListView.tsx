@@ -3,13 +3,19 @@ import {Text, View, TouchableOpacity, StyleSheet, Alert} from 'react-native';
 import {Event} from '../screens/ActivitiyCenter';
 import {Reward} from '../screens/Rewards';
 import ActivityDetails from './ActivityDetails';
-type Props = {
-  data: Event[] | Reward[];
-}
+import RewardDetails from './RewardDetails';
+type Props =
+  | {
+      data: Event[];
+    }
+  | {
+      data: Reward[];
+    };
 
 const ListView = ({data}: Props) => {
   const [displayDetails, setdisplayDetails] = useState<Boolean>(false);
-  const [selectedActivity, setSelectedActivty] = useState<Event>();
+  const [selectedItem, setSelectedActivty] = useState<Event | Reward>();
+  const [isEvent, setisEvent] = useState<Boolean>(false);
 
   return (
     <>
@@ -17,20 +23,32 @@ const ListView = ({data}: Props) => {
         <View>
           {data.map((item, index) => (
             <TouchableOpacity
-              key={item.eventid | item.rewardid}
+              key={
+                'eventid' in item
+                  ? (item as Event).eventid
+                  : (item as Reward).rewardid
+              }
               style={styles.container}
               onPress={() => {
                 setdisplayDetails(true);
-                setSelectedActivty(item);
+                setSelectedActivty(
+                  'eventid' in item ? (item as Event) : (item as Reward),
+                );
+                setisEvent('eventid' in item ? true : false);
               }}>
-              <Text style={styles.text}>{item.eventname}</Text>
+              <Text style={styles.text}>
+                {'eventid' in item
+                  ? (item as Event).eventname
+                  : (item as Reward).rewardname}
+              </Text>
             </TouchableOpacity>
           ))}
         </View>
       )}
       {displayDetails && (
         <View style={styles.displayDetails}>
-          <ActivityDetails activity={selectedActivity} />
+          {isEvent && <ActivityDetails activity={selectedItem} />}
+          {!isEvent && <RewardDetails reward={selectedItem} />}
           <TouchableOpacity
             onPress={() => {
               setdisplayDetails(false);
