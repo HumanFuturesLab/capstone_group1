@@ -9,7 +9,7 @@ import profileIcon from '../Images/profileIcon.png';
 import ActivityCentre from './ActivitiyCenter.tsx';
 import Dashboard from './Dashboard.js';
 import Profile from './Profile.tsx';
-import Rewards from './Rewards.js';
+import Rewards from './Rewards.tsx';
 import TownSquare from './TownSquare.js';
 
 const Tab = createBottomTabNavigator();
