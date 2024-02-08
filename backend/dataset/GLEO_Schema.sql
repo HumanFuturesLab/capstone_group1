@@ -24,7 +24,7 @@ CREATE TABLE CompanyUser (
   nameFirst VARCHAR(30),
   nameLast VARCHAR(30),
   userName VARCHAR(30),
-  password VARCHAR(30),
+  accessToken VARCHAR(255),
   address VARCHAR(50),
   email VARCHAR(50),
   companyID uuid,
@@ -36,7 +36,7 @@ CREATE TABLE Admins (
   nameFirst VARCHAR(30),
   nameLast VARCHAR(30),
   username VARCHAR(30),
-  password VARCHAR(30),
+  accessToken VARCHAR(255),
   email VARCHAR(50)
 );
 
@@ -111,11 +111,11 @@ CREATE TABLE Comments (
 
 
 -- Inserting data into Users
-INSERT INTO Users (nameFirst, nameLast, userName, password, address, email, pointsCached, followers)
-VALUES ('John', 'Doe', 'johndoe', 'pass123', '123 Main St', 'john.doe@example.com', 100, 15);
+INSERT INTO Users (nameFirst, nameLast, userName, accessToken, address, email, pointsCached, followers)
+VALUES ('John', 'Doe', 'johndoe', 'accessToken_user_John_Doe', '123 Main St', 'john.doe@example.com', 100, 15);
 
-INSERT INTO Users (nameFirst, nameLast, userName, password, address, email, pointsCached, followers)
-VALUES ('Jane', 'Smith', 'janesmith', 'password', '456 Elm St', 'jane.smith@example.com', 150, 20);
+INSERT INTO Users (nameFirst, nameLast, userName, accessToken, address, email, pointsCached, followers)
+VALUES ('Jane', 'Smith', 'janesmith', 'accessToken_user_Jane_Smith', '456 Elm St', 'jane.smith@example.com', 150, 20);
 
 -- Inserting data into Company
 INSERT INTO Company (companyName, email)
@@ -126,13 +126,13 @@ VALUES ('Globex Corporation', 'info@globexcorp.com');
 
 -- Inserting data into CompanyUser (assuming the companyID for Acme Corporation is known or fetched)
 -- Example of fetching companyID (replace 'Acme Corporation' with actual name if different)
-INSERT INTO CompanyUser (nameFirst, nameLast, userName, password, address, email, companyID)
-VALUES ('Alice', 'Johnson', 'alicej', 'alicepass', '789 Pine St', 'alice.johnson@example.com', 
+INSERT INTO CompanyUser (nameFirst, nameLast, userName, accessToken, address, email, companyID)
+VALUES ('Alice', 'Johnson', 'alicej', 'accessToken_Company_user_Alice_Johnson', '789 Pine St', 'alice.johnson@example.com', 
 (SELECT companyID FROM Company WHERE companyName = 'Acme Corporation'));
 
 -- Inserting data into Admins
-INSERT INTO Admins (nameFirst, nameLast, username, password, email)
-VALUES ('Mark', 'Zuckerberg', 'markz', 'admin123', 'mark.zuckerberg@example.com');
+INSERT INTO Admins (nameFirst, nameLast, username, accessToken, email)
+VALUES ('Mark', 'Zuckerberg', 'markz', 'accessToken_admin_Mark_Zuckerberg', 'mark.zuckerberg@example.com');
 
 -- Inserting data into Events (assuming adminID is known or fetched)
 -- Example of fetching adminID
