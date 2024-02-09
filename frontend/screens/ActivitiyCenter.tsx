@@ -44,19 +44,14 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     paddingTop: 30,
-    justifyContent: 'center',
+    margin: 15,
+    //justifyContent: 'center',
     alignItems: 'center',
   },
-  backgroundImage: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center',
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-  },
+  
   textStyle: {
     fontSize: 48,
-    
+    fontWeight: 'bold',
+    paddingBottom: 15,
   }
 });
