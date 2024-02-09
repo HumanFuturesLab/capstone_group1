@@ -24,8 +24,8 @@ const Home = () => {
       },
       {},
     );
-    //const credentials = await getCredentials();
-    //console.log(credentials);
+    const credentials = await getCredentials();
+    console.log(credentials);
   };
 
   if (isLoading) {

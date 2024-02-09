@@ -12,6 +12,8 @@ import Profile from './Profile.tsx';
 import Rewards from './Rewards.js';
 import TownSquare from './TownSquare.js';
 
+
+
 const Tab = createBottomTabNavigator();
 
 const UserHome = () => {
