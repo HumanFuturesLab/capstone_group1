@@ -20,7 +20,7 @@ const ListView = ({data}: Props) => {
   return (
     <>
       {!displayDetails && (
-        <View>
+        <View style={styles.container}>
           {data.map((item, index) => (
             <TouchableOpacity
               key={
@@ -28,7 +28,7 @@ const ListView = ({data}: Props) => {
                   ? (item as Event).eventid
                   : (item as Reward).rewardid
               }
-              style={styles.container}
+              style={styles.activity}
               onPress={() => {
                 setdisplayDetails(true);
                 setSelectedActivty(
@@ -66,10 +66,19 @@ export default ListView;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    width: '100%',
+    alignItems: 'center',
+  },
+  activity: {
     padding: 10,
     marginTop: 3,
     backgroundColor: '#d9f9b1',
     alignItems: 'center',
+    width: '70%',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: 'black',
   },
   text: {
     color: '#4f603c',
