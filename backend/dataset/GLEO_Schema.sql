@@ -6,7 +6,7 @@ CREATE TABLE Users (
   nameFirst VARCHAR(30),
   nameLast VARCHAR(30),
   userName VARCHAR(30),
-  password VARCHAR(30),
+  accessToken VARCHAR(30),
   address VARCHAR(50),
   email VARCHAR(50),
   pointsCached int,
@@ -111,10 +111,10 @@ CREATE TABLE Comments (
 
 
 -- Inserting data into Users
-INSERT INTO Users (nameFirst, nameLast, userName, password, address, email, pointsCached, followers)
+INSERT INTO Users (nameFirst, nameLast, userName, accessToken, address, email, pointsCached, followers)
 VALUES ('John', 'Doe', 'johndoe', 'pass123', '123 Main St', 'john.doe@example.com', 100, 15);
 
-INSERT INTO Users (nameFirst, nameLast, userName, password, address, email, pointsCached, followers)
+INSERT INTO Users (nameFirst, nameLast, userName, accessToken, address, email, pointsCached, followers)
 VALUES ('Jane', 'Smith', 'janesmith', 'password', '456 Elm St', 'jane.smith@example.com', 150, 20);
 
 -- Inserting data into Company

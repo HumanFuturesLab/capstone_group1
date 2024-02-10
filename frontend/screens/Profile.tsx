@@ -1,10 +1,12 @@
-import {Button, SafeAreaView, StyleSheet, Text, Alert} from 'react-native';
+import {Button, SafeAreaView, StyleSheet, Text, Alert , View} from 'react-native';
 import React, {useContext} from 'react';
 import {useAuth0} from 'react-native-auth0';
 import {Context} from '../context';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import account from './account.js';
+import { Image } from 'react-native-svg';
+
 
 
 
@@ -22,6 +24,12 @@ const Profile = () => {
 
   const { user } = useAuth0();
 
+    
+
+
+
+
+
   
 
   const Stack = createNativeStackNavigator();
@@ -29,7 +37,7 @@ const Profile = () => {
   //console.log(user);
 
 
-const item = "Account name: " + user?.name + "\n\nAccount email: " +  user?.email  + "\n\nEmail Verified: "   + user?.emailVerified + "\n\npic" + user?.picture
+const item = "Account name: " + user?.name + "\n\nAccount email: " +  user?.email  + "\n\nEmail Verified: "   + user?.emailVerified + "\n\npic:" + <Image>(user?.picture) </Image>
 
 
   const acc = () => {
@@ -52,6 +60,9 @@ const item = "Account name: " + user?.name + "\n\nAccount email: " +  user?.emai
       
       
       <Button onPress ={acc } title='View Account'/>
+      <View>
+
+      </View>
       
       <Button onPress={onLogout} title={'Log Out'} />
       
