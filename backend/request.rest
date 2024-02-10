@@ -67,6 +67,60 @@ Content-Type: application/json
 
 GET http://localhost:3000/user
 
+{
+  "data": [
+    {
+      "userid": "256af3e4-5457-4f14-8ef4-a6c7ab93b3d6",
+      "namefirst": "John",
+      "namelast": "Doe",
+      "username": "johndoe",
+      "accesstoken": "pass123",
+      "address": "123 Main St",
+      "email": "john.doe@example.com",
+      "points": 100,
+      "followers": 15
+    },
+    {
+      "userid": "7720ef55-48b7-47b5-a131-dcc9d4a2147b",
+      "namefirst": "Jane",
+      "namelast": "Smith",
+      "username": "janesmith",
+      "accesstoken": "password",
+      "address": "456 Elm St",
+      "email": "jane.smith@example.com",
+      "points": 150,
+      "followers": 20
+    }
+  ]
+}
+
+
+
+####
+
+GET http://localhost:3000/user/userName
+
+eg:  http://localhost:3000/user/janesmith
+
+[
+  {
+    "userid": "7720ef55-48b7-47b5-a131-dcc9d4a2147b",
+    "namefirst": "Jane",
+    "namelast": "Smith",
+    "username": "janesmith",
+    "accesstoken": "password",
+    "address": "456 Elm St",
+    "email": "jane.smith@example.com",
+    "points": 150,
+    "followers": 20
+  }
+]
+
+
+
+
+
+
 
 ####
 
@@ -92,3 +146,6 @@ Content-Type: application/json
     "rewardId": 146,
     "userId": 2
 }
+
+
+

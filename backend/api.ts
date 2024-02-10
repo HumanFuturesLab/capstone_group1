@@ -126,20 +126,25 @@ const startApi = async () => {
       });
 
 
+
+
+      //this will add new users to the databse based on JSON body.
+
+
       app.post("/users", async (req, res) => {
         // Assuming you have middleware like app.use(express.json()) to parse JSON bodies
-        const { nameFirst, nameLast, userName, accessToken, address, email, pointsCached, followers} =
+        const { nameFirst, nameLast, userName, accessToken, address, email, points, followers} =
           req.body;
 
         const query = `
-          INSERT INTO users(nameFirst, nameLast, userName, accessToken, address, email, pointsCached, followers) 
+          INSERT INTO users(nameFirst, nameLast, userName, accessToken, address, email, points,  followers) 
           VALUES($1, $2, $3, $4, $5, $6, $7, $8)
           RETURNING *;
         `;
 
         try {
           const result = await client.query(query, [
-            nameFirst, nameLast, userName, accessToken, address, email, pointsCached, followers
+            nameFirst, nameLast, userName, accessToken, address, email, points,  followers
             
           ]);
 
@@ -155,6 +160,39 @@ const startApi = async () => {
           res.status(500).send("Server Error: Unable to create event");
         }
       });
+      
+
+
+
+      //endpoint to get points based on accesstoken is not possible becuase it is changing therefore i am thinking username is the better match
+
+        
+        //Return array of rewards
+
+
+      app.get("/users/:userName", async (req, res) => {
+        const param = req.params.userName;
+
+        let Userspoints = await client.query(
+          `SELECT * FROM users WHERE users.userName = '${param}';`     //  "select * " can be modified to "select users.points" if only wanting points
+        );
+        
+
+        res.json(Userspoints["rows"]);
+      });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       app.listen(3000, () => {
         console.log("listening on 3000");
