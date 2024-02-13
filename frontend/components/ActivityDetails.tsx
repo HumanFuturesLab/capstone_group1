@@ -18,7 +18,6 @@ type ActivityProps = {
 };
 
 const ActivityDetails = ({activity}: ActivityProps) => {
-  console.log('test: ', activity);
   if (!activity) return null;
 
   const formatDate = (dateString: string): string => {
