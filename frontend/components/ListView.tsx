@@ -1,65 +1,29 @@
-import React, {Component, useState} from 'react';
-import {Text, View, TouchableOpacity, StyleSheet, Alert} from 'react-native';
-import {Event} from '../screens/ActivitiyCenter';
-import {Reward} from '../screens/Rewards';
-import ActivityDetails from './ActivityDetails';
-import RewardDetails from './RewardDetails';
-type Props =
-  | {
-      data: Event[];
-    }
-  | {
-      data: Reward[];
-    };
+import React from 'react';
+import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
+type Option = {
+  id: string;
+  name: string;
+};
 
-const ListView = ({data}: Props) => {
-  const [displayDetails, setdisplayDetails] = useState<Boolean>(false);
-  const [selectedItem, setSelectedActivty] = useState<Event | Reward>();
-  const [isEvent, setisEvent] = useState<Boolean>(false);
+type ListViewProps = {
+  items: Option[];
+  setSelectedItem: React.Dispatch<React.SetStateAction<string | null>>;
+};
 
+const ListView = ({items, setSelectedItem}: ListViewProps) => {
   return (
-    <>
-      {!displayDetails && (
-        <View>
-          {data.map((item, index) => (
-            <TouchableOpacity
-              key={
-                'eventid' in item
-                  ? (item as Event).eventid
-                  : (item as Reward).rewardid
-              }
-              style={styles.container}
-              onPress={() => {
-                setdisplayDetails(true);
-                setSelectedActivty(
-                  'eventid' in item ? (item as Event) : (item as Reward),
-                );
-                setisEvent('eventid' in item ? true : false);
-              }}>
-              <Text style={styles.text}>
-                {'eventid' in item
-                  ? (item as Event).eventname
-                  : (item as Reward).rewardname}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      )}
-      {displayDetails && (
-        <View style={styles.displayDetails}>
-          {isEvent && <ActivityDetails activity={selectedItem} />}
-          {!isEvent && <RewardDetails reward={selectedItem} />}
-          <TouchableOpacity
-            onPress={() => {
-              setdisplayDetails(false);
-            }}
-            style={styles.button}
-            activeOpacity={0.8}>
-            <Text style={styles.buttonText}>Go Back</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-    </>
+    <View>
+      {items.map(item => (
+        <TouchableOpacity
+          key={`item-${item.id}`}
+          onPress={() => {
+            setSelectedItem(item.id);
+          }}
+          style={styles.container}>
+          <Text style={styles.text}>{item.name}</Text>
+        </TouchableOpacity>
+      ))}
+    </View>
   );
 };
 export default ListView;
