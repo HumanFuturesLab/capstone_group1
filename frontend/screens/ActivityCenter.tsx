@@ -34,7 +34,7 @@ const formatEventOptions = (options: Event[]) => {
   });
 };
 
-const ActivityCentre = () => {
+const ActivityCenter = () => {
   const [eventData, setEventsData] = useState<Event[]>([]);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
@@ -73,7 +73,7 @@ const ActivityCentre = () => {
   );
 };
 
-export default ActivityCentre;
+export default ActivityCenter;
 
 const styles = StyleSheet.create({
   root: {

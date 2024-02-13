@@ -11,7 +11,7 @@ import {
   TextInput,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {Event} from '../screens/ActivitiyCenter';
+import {Event} from '../screens/ActivityCenter';
 
 type ActivityProps = {
   activity: Event | undefined;
