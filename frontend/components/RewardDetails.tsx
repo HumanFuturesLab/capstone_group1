@@ -37,7 +37,7 @@ const RewardDetails = ({reward}: RewardProps) => {
             style={styles.detailText}>{`${reward.pointcost} Points`}</Text>
         </View>
       )}
-      {reward.numavailable&& (
+      {reward.numavailable && (
         <View style={styles.detailRow}>
           <Text style={styles.detailText}>{`${reward.numavailable} remaining`}</Text>
         </View>
