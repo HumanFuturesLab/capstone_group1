@@ -388,7 +388,6 @@ const styles = StyleSheet.create({
     height: '200%',
   },
   button: {
-    //marginTop: 'auto',
     backgroundColor: '#cdf169',
     paddingLeft: 18,
     paddingRight: 18,
