@@ -46,29 +46,31 @@ const ActivityCenter = () => {
     getEventData(setEventsData);
   }, []);
 
+  const Display =
+    selectedItem === null ? (
+      <ListView
+        setSelectedItem={setSelectedItem}
+        items={formatEventOptions(eventData || [])}
+      />
+    ) : (
+      <View style={styles.displayDetails}>
+        <ActivityDetails activity={selectedEvent} />
+
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => {
+            setSelectedItem(null);
+          }}
+          style={styles.button}>
+          <Text style={styles.buttonText}>Go Back</Text>
+        </TouchableOpacity>
+      </View>
+    );
+
   return (
     <View style={styles.root}>
       <Text style={styles.textStyle}>Activity Center</Text>
-      {selectedItem === null && (
-        <ListView
-          setSelectedItem={setSelectedItem}
-          items={formatEventOptions(eventData || [])}
-        />
-      )}
-      {selectedItem !== null && (
-        <View style={styles.displayDetails}>
-          <ActivityDetails activity={selectedEvent} />
-
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => {
-              setSelectedItem(null);
-            }}
-            style={styles.button}>
-            <Text style={styles.buttonText}>Go Back</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+      {Display}
     </View>
   );
 };

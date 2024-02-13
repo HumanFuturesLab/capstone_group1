@@ -42,29 +42,31 @@ const Rewards = () => {
   useEffect(() => {
     getRewardsData(setRewardsData);
   }, []);
+
+  const Display =
+    selectedItem === null ? (
+      <ListView
+        setSelectedItem={setSelectedItem}
+        items={formatRewardOptions(rewardData)}
+      />
+    ) : (
+      <View style={styles.displayDetails}>
+        <RewardDetails reward={selectedReward} />
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => {
+            setSelectedItem(null);
+          }}
+          style={styles.button}>
+          <Text style={styles.buttonText}>Go Back</Text>
+        </TouchableOpacity>
+      </View>
+    );
+
   return (
     <View style={styles.root}>
       <Text style={styles.textStyle}>Rewards</Text>
-      {selectedItem === null && (
-        <ListView
-          setSelectedItem={setSelectedItem}
-          items={formatRewardOptions(rewardData)}
-        />
-      )}
-      {selectedItem !== null && (
-        <View style={styles.displayDetails}>
-          <RewardDetails reward={selectedReward} />
-
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => {
-              setSelectedItem(null);
-            }}
-            style={styles.button}>
-            <Text style={styles.buttonText}>Go Back</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+      {Display}
     </View>
   );
 };
