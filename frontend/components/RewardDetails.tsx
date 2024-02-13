@@ -26,32 +26,30 @@ const RewardDetails = ({reward}: RewardProps) => {
     <View style={styles.container}>
       <Text style={styles.title}>{reward.rewardname}</Text>
       {reward.rewarddesc && (
-        <Text style={styles.description}>
-          Description: {reward.rewarddesc}
-        </Text>
+        <Text style={styles.description}>Description: {reward.rewarddesc}</Text>
       )}
       {reward.pointcost && (
         <View style={styles.detailRow}>
           <Icon name="star" size={20} />
-          <Text
-            style={styles.detailText}>{`${reward.pointcost} Points`}</Text>
+          <Text style={styles.detailText}>{`${reward.pointcost} Points`}</Text>
         </View>
       )}
       {reward.numavailable && (
         <View style={styles.detailRow}>
-          <Text style={styles.detailText}>{`${reward.numavailable} remaining`}</Text>
+          <Text
+            style={
+              styles.detailText
+            }>{`${reward.numavailable} remaining`}</Text>
         </View>
       )}
-      <Text></Text>
       <TouchableOpacity
-            onPress={() => {
-              Alert.alert('Do stuff');
-            }}
-            style={styles.button}
-            activeOpacity={0.8}>
-            <Text style={styles.buttonText}>Purchase</Text>
-          </TouchableOpacity>
-          <Text></Text>
+        onPress={() => {
+          Alert.alert('Do stuff');
+        }}
+        style={styles.button}
+        activeOpacity={0.8}>
+        <Text style={styles.buttonText}>Purchase</Text>
+      </TouchableOpacity>
     </View>
   );
 };
