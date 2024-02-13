@@ -55,7 +55,6 @@ const Home = () => {
           </NavigationContainer>
         </Context.Provider>
       )}
-      {/* {!user && <Text>You are not logged in</Text>} */}
       {!user && (
         <View style={styles.container}>
           <>

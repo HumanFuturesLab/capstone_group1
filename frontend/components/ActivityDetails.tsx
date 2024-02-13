@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons'; // Assuming you're using react-native-vector-icons
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Event} from '../screens/ActivitiyCenter';
 
 type ActivityProps = {
@@ -8,6 +8,7 @@ type ActivityProps = {
 };
 
 const ActivityDetails = ({activity}: ActivityProps) => {
+  console.log('test: ', activity);
   if (!activity) return null;
 
   const formatDate = (dateString: string): string => {
