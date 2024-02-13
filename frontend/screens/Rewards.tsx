@@ -75,12 +75,14 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     paddingTop: 30,
-    justifyContent: 'center',
+    margin: 15,
+    //justifyContent: 'center',
     alignItems: 'center',
   },
-
   textStyle: {
     fontSize: 48,
+    fontWeight: 'bold',
+    paddingBottom: 15,
   },
   container: {
     padding: 10,
