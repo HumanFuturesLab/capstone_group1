@@ -40,6 +40,46 @@ const startApi = async () => {
         res.json({ data: x["rows"] });
       });
 
+      // create a user
+      app.post("/users", async (req: Request, res: Response) => {
+        const checkUser = await userExists(req.body.email);
+        if (checkUser) {
+          if (checkUser.accesstoken === req.body.accessToken) {
+            res.json({ data: checkUser, error: "user exists" });
+            return;
+          }
+          if (checkUser.accessToken !== req.body.accessToken) {
+            res.json({ data: {}, error: "user exists" });
+            return;
+          }
+        }
+
+        let newUser = {
+          nameFirst: req.body.name, // we can take the "name" from auth0
+          nameLast: "", // a user can change this in the profile
+          userName: req.body.name, // this can be the same as "nameFirst"
+          accessToken: req.body.accessToken, // from auth0
+          address: "", // user will set it in profile later
+          email: req.body.email, // this will come from auth0
+          pointsCached: 0,
+          followers: 0,
+        };
+
+        let query = `INSERT INTO Users (nameFirst, nameLast, userName, accessToken, address, email, pointsCached, followers) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
+        await client.query(query, [
+          newUser.nameFirst,
+          newUser.nameLast,
+          newUser.userName,
+          newUser.accessToken,
+          newUser.address,
+          newUser.email,
+          newUser.pointsCached,
+          newUser.followers,
+        ]);
+
+        res.json({ data: { newUser }, error: "" });
+      });
+
       //Return array of rewards
       app.get("/rewards/:userID", async (req, res) => {
         let param = req.params.userID;
