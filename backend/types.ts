@@ -5,10 +5,10 @@ type Users = {
   nameFirst: string;
   nameLast: string;
   userName: string;
-  password: string;
+  accessToken: string;
   address: string;
   email: string;
-  pointsCached: number;
+  points: number;
   followers: number;
 };
 

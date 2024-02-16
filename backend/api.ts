@@ -209,6 +209,64 @@ const startApi = async () => {
       });
 
 
+      //to add coins to users
+      //the endpoint is case sensitive to the JSON body
+
+      app.post("/points", async (req, res) => {
+        // Assuming you have middleware like app.use(express.json()) to parse JSON bodies
+        const { userName, accessToken, points} =
+          req.body;
+
+
+          let token = await client.query( `SELECT users.accessToken FROM users WHERE users.userName = '${userName}';` );
+
+          
+
+          let password = token["rows"][0]["accesstoken"]
+
+          //console.log(accessToken)
+
+          if( password !=  accessToken){
+  
+            res.status(500).send("You do not have permission to access this database");
+            return;
+  
+          }
+
+
+        //this will have code to verify accesstoken
+
+        //console.log(userName)
+
+
+        
+
+        try {
+          const result = await client.query(`
+          UPDATE users SET points=${points} WHERE users.userName = '${userName}' RETURNING users.*; `);
+
+          // Check if the insert was successful and return the newly created event
+         
+           // res.json(result["rows"][0]["points"]);
+
+            if (result.rows && result.rows.length > 0) {
+              res.status(201).send("Succesfully Updated points"); // Send the inserted event back to the client
+            }
+            
+            
+            
+            // Send the inserted event back to the client
+           
+        } catch (err: any) {
+          console.error("Error executing query:", err.message);
+          res.status(500).send("Server Error: Unable to create event");
+        }
+      });
+
+
+
+
+
 
 
 
