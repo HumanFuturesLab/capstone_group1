@@ -14,6 +14,14 @@ const startApi = async () => {
     password: "postgres",
     port: 5432,
   });
+
+  const userExists = async (email: string) => {
+    // need to give it a user type later
+    let query = `SELECT * FROM users WHERE email=$1;`;
+    let resp = (await client.query(query, [email])).rows[0]; // if there is a row in the resp
+    return resp;
+  };
+
   client.connect(async (err) => {
     if (err) {
       console.error("connection error", err.stack);
