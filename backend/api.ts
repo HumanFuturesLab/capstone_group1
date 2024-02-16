@@ -182,6 +182,33 @@ const startApi = async () => {
       });
 
 
+        
+      //Endpoint to get the points based on username and accesstoken
+
+      app.get("/points/:userName/:accessToken", async (req, res) => {
+        const usernameparam = req.params.userName;
+        const accsst = req.params.accessToken;
+
+        let token = await client.query( `SELECT users.accessToken FROM users WHERE users.userName = '${usernameparam}';` );
+
+       // console.log(token["rows"][0]["accesstoken"]);
+        
+        let password = token["rows"][0]["accesstoken"]
+        if( password !=  accsst){
+
+          res.status(500).send("You do not have permission to access this database");
+
+        }
+
+        let Userspoints = await client.query(
+          `SELECT users.points FROM users WHERE users.userName = '${usernameparam}';`     //  "select * " can be modified to "select users.points" if only wanting points
+        );
+        
+
+        res.json(Userspoints["rows"]);
+      });
+
+
 
 
 
