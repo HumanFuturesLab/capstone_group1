@@ -14,7 +14,7 @@ const Profile = () => {
     <SafeAreaView>
       <Text>Profile</Text>
       <Button onPress={onLogout} title={'Log Out'} />
-      <Text>{value.name}</Text>
+      {value && <Text>{value.email}</Text>}
     </SafeAreaView>
   );
 };

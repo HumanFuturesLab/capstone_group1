@@ -37,6 +37,20 @@ type IdToken = {
   sid: string;
 };
 
+export type InternalUser =
+  | {
+      userid: string;
+      namefirst: string;
+      namelast: string;
+      username: string;
+      accesstoken: string;
+      address: string;
+      email: string;
+      pointscached: number;
+      followers: number;
+    }
+  | undefined;
+
 const parseSub = (s: string): string => {
   try {
     // Split the JWT to get the payload
@@ -51,7 +65,10 @@ const parseSub = (s: string): string => {
   }
 };
 
-const createUser = async (data: Object) => {
+const createUser = async (
+  data: Object,
+  setUserInfo: React.Dispatch<React.SetStateAction<InternalUser | undefined>>,
+): Promise<void> => {
   const resp = fetch('http://localhost:3000/users', {
     method: 'POST',
     headers: {
@@ -60,14 +77,14 @@ const createUser = async (data: Object) => {
     body: JSON.stringify(data),
   });
 
-  const result = (await resp).json();
-  console.log(await result);
+  const result: InternalUser = (await (await resp).json()).data;
+  setUserInfo(result);
 };
 
 const Home = () => {
   const {authorize, clearSession, user, getCredentials, error, isLoading} =
     useAuth0();
-  const [userInfo, setUserInfo] = useState<User>({});
+  const [userInfo, setUserInfo] = useState<InternalUser | undefined>();
   const [idToken, setIdToken] = useState<string | undefined>();
 
   useEffect(() => {
@@ -84,8 +101,7 @@ const Home = () => {
         email: user.email,
         accessToken: idToken,
       };
-      setUserInfo(user);
-      createUser(tempUser);
+      createUser(tempUser, setUserInfo);
     }
   }, [user, idToken]);
 

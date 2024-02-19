@@ -1,3 +1,4 @@
 import {createContext} from 'react';
+import {InternalUser} from './App';
 
-export const Context = createContext({} as import('react-native-auth0').User);
+export const Context = createContext({} as InternalUser);
