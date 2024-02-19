@@ -4,10 +4,10 @@ import ListView from '../components/ListView';
 import RewardDetails from '../components/RewardDetails';
 
 export type Reward = {
-  rewardid: string;
-  rewardname: string;
-  rewarddesc: string;
-  pointcost: number;
+  id: string;
+  name: string;
+  description: string;
+  cost: number;
   companyid: string;
   numavailable: number;
 };
