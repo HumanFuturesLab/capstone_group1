@@ -25,15 +25,6 @@ const getEventData = (
     .then(result => setEventsData(result.data));
 };
 
-const formatEventOptions = (options: Event[]) => {
-  return options.map(option => {
-    return {
-      id: option.eventid,
-      name: option.eventname,
-    };
-  });
-};
-
 const ActivityCenter = () => {
   const [eventData, setEventsData] = useState<Event[]>([]);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
@@ -48,10 +39,7 @@ const ActivityCenter = () => {
 
   const Display =
     selectedItem === null ? (
-      <ListView
-        setSelectedItem={setSelectedItem}
-        items={formatEventOptions(eventData || [])}
-      />
+      <ListView setSelectedItem={setSelectedItem} items={eventData || []} />
     ) : (
       <View style={styles.displayDetails}>
         <ActivityDetails activity={selectedEvent} />
