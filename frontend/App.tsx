@@ -1,22 +1,115 @@
 import 'react-native-gesture-handler';
-import React, {useEffect, useState} from 'react';
+import React, {createElement, useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {Button, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import Auth0, {useAuth0, Auth0Provider} from 'react-native-auth0';
+import {
+  Button,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  DevSettings,
+} from 'react-native';
+import Auth0, {useAuth0, Auth0Provider, User} from 'react-native-auth0';
 import StorybookUI from './.storybook';
 import Config from 'react-native-config';
 import UserHome from './screens/UserHome';
 import {Context} from './context';
 import {SvgXml} from 'react-native-svg';
 import {groupSvg, framexml, gleotextxml} from './Images/AppSvgs';
+import base64 from 'react-native-base64';
 
 const Stack = createNativeStackNavigator();
+
+type IdToken = {
+  'https://com.gleo.ios/first_login': boolean;
+  nickname: string;
+  name: string;
+  picture: string;
+  updated_at: string;
+  email: string;
+  email_verified: boolean;
+  iss: string;
+  aud: string;
+  iat: number;
+  exp: number;
+  sub: string;
+  sid: string;
+};
+
+export type InternalUser =
+  | {
+      userid: string;
+      namefirst: string;
+      namelast: string;
+      username: string;
+      accesstoken: string;
+      address: string;
+      email: string;
+      pointscached: number;
+      followers: number;
+    }
+  | undefined;
+
+type tempUser = {
+  name: string;
+  email: string;
+  accesstoken: string;
+};
+
+const parseSub = (s: string): string => {
+  try {
+    // Split the JWT to get the payload
+    const dataPart = s.split('.')[1];
+    const decodedPayload = base64.decode(dataPart).replace(/\u0000/g, '');
+    // Parse the JSON string into an object
+    const result: IdToken = JSON.parse(decodedPayload);
+    return result.sub;
+  } catch (error) {
+    console.log('ERROR DECODING', error);
+    return '';
+  }
+};
+
+const createUser = async (
+  data: tempUser,
+  setUserInfo: React.Dispatch<React.SetStateAction<InternalUser | undefined>>,
+): Promise<void> => {
+  const resp = fetch('http://localhost:3000/users', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  const result: InternalUser = (await (await resp).json()).data;
+  setUserInfo(result);
+};
 
 const Home = () => {
   const {authorize, clearSession, user, getCredentials, error, isLoading} =
     useAuth0();
-  const [userInfo, setUserInfo] = useState({...user});
+  const [userInfo, setUserInfo] = useState<InternalUser | undefined>();
+  const [idToken, setIdToken] = useState<string | undefined>();
+
+  useEffect(() => {
+    const getCreds = async () => {
+      let result = await getCredentials();
+      setIdToken(parseSub(result?.idToken || ''));
+    };
+    // TODO: figure out why this runs 2 times sometimes
+    getCreds();
+
+    if (user?.name && user?.email && idToken) {
+      const tempUser = {
+        name: user.name,
+        email: user.email,
+        accesstoken: idToken,
+      };
+      createUser(tempUser, setUserInfo);
+    }
+  }, [user, idToken]);
 
   const onLogin = async () => {
     await authorize(
@@ -25,8 +118,6 @@ const Home = () => {
       },
       {},
     );
-    const credentials = await getCredentials();
-    console.log(credentials);
   };
 
   if (isLoading) {
