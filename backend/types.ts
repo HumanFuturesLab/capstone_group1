@@ -1,7 +1,7 @@
 import { UUID } from "crypto";
 
 type Users = {
-  userID: UUID;
+  id: UUID;
   nameFirst: string;
   nameLast: string;
   userName: string;
