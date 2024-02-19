@@ -4,14 +4,14 @@ import ListView from '../components/ListView';
 import ActivityDetails from '../components/ActivityDetails';
 
 export type Event = {
-  eventid: string;
-  eventname: string;
-  eventdesc: string;
-  eventdate: string;
+  id: string;
+  name: string;
+  description: string;
+  date: string;
   pointreward: number;
   popmin: number;
   popmax: number;
-  adminid: string;
+  userid: string;
   location: string;
 };
 
@@ -39,7 +39,7 @@ const ActivityCenter = () => {
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
   const selectedEvent = eventData.filter(item => {
-    return item.eventid === selectedItem;
+    return item.id === selectedItem;
   })[0];
 
   useEffect(() => {
