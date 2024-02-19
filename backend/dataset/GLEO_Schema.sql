@@ -23,7 +23,7 @@ CREATE TABLE Events (
   id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   name VARCHAR(255),
   description VARCHAR (255),
-  eventDate date,
+  date DATE,
   pointReward INT,
   popMin INT,
   popMax INT,
@@ -45,7 +45,7 @@ CREATE TABLE Rewards (
 CREATE TABLE Orders (
   userID uuid,
   rewardID uuid,
-  orderDate date,
+  date DATE,
   PRIMARY KEY (userID, rewardID),
   FOREIGN KEY (userID) REFERENCES Users(id),
   FOREIGN KEY (rewardID) REFERENCES Rewards(id)
@@ -65,7 +65,7 @@ CREATE TABLE Posts (
   id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   userID uuid,
   caption VARCHAR(255),
-  datePosted date,
+  date DATE,
   likes INT,
   comments INT,
   FOREIGN KEY (userID) REFERENCES Users(id)
@@ -82,7 +82,7 @@ CREATE TABLE Likes (
 CREATE TABLE Comments (
   id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   body VARCHAR(255),
-  datePosted date,
+  date DATE,
   userID uuid,
   postID uuid,
   FOREIGN KEY (postID) REFERENCES Posts(id),
