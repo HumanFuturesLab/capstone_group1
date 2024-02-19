@@ -17,22 +17,13 @@ type Company = {
   email: string;
 };
 
-type Admins = {
-  adminID: UUID;
-  nameFirst: string;
-  nameLast: string;
-  username: string;
-  password: string;
-  email: string;
-};
-
 type Events = {
   eventID: UUID;
   eventDate: Date;
   pointReward: number;
   popMin: number;
   popMax: number;
-  adminID: UUID;
+  userID: UUID;
   location: string;
 };
 

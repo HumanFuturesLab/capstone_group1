@@ -9,22 +9,14 @@ CREATE TABLE Users (
   email VARCHAR(255),
   pointsCached int,
   followers int,
-  companyID uuid
+  companyID uuid,
+  isAdmin boolean DEFAULT false
 );
 
 CREATE TABLE Company (
   id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   companyName VARCHAR(30),
   email VARCHAR(50)
-);
-
-CREATE TABLE Admins (
-  adminID uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
-  nameFirst VARCHAR(30),
-  nameLast VARCHAR(30),
-  username VARCHAR(30),
-  email VARCHAR(255),
-  accessToken VARCHAR(255)
 );
 
 CREATE TABLE Events (
@@ -35,9 +27,9 @@ CREATE TABLE Events (
   pointReward int,
   popMin int,
   popMax int,
-  adminID uuid,
-  FOREIGN KEY (adminID) REFERENCES Admins(adminID)
+  userID uuid,
   location VARCHAR(255),
+  FOREIGN KEY (userID) REFERENCES Users(id)
 );
 
 CREATE TABLE Rewards (
