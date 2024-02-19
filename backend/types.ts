@@ -11,7 +11,7 @@ type Users = {
 };
 
 type Company = {
-  companyID: UUID;
+  id: UUID;
   companyName: string;
   email: string;
 };

@@ -12,7 +12,7 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Company (
-  companyID uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   companyName VARCHAR(30),
   email VARCHAR(50)
 );
@@ -26,7 +26,7 @@ CREATE TABLE CompanyUser (
   address VARCHAR(50),
   email VARCHAR(255),
   companyID uuid,
-  FOREIGN KEY (companyID) REFERENCES Company(companyID)
+  FOREIGN KEY (companyID) REFERENCES Company(id)
 );
 
 CREATE TABLE Admins (
@@ -58,7 +58,7 @@ CREATE TABLE Rewards (
   pointCost int,
   companyID uuid,
   numAvailable int,
-  FOREIGN KEY (companyID) REFERENCES Company(companyID)
+  FOREIGN KEY (companyID) REFERENCES Company(id)
 );
 
 CREATE TABLE Orders (
