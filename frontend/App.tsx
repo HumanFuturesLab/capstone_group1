@@ -47,7 +47,7 @@ export type InternalUser =
       pointscached: number;
       followers: number;
     }
-  | undefined;
+  | undefined; // TODO: change this later
 
 type tempUser = {
   name: string;
