@@ -51,6 +51,12 @@ export type InternalUser =
     }
   | undefined;
 
+type tempUser = {
+  name: string;
+  email: string;
+  accesstoken: string;
+};
+
 const parseSub = (s: string): string => {
   try {
     // Split the JWT to get the payload
@@ -66,7 +72,7 @@ const parseSub = (s: string): string => {
 };
 
 const createUser = async (
-  data: Object,
+  data: tempUser,
   setUserInfo: React.Dispatch<React.SetStateAction<InternalUser | undefined>>,
 ): Promise<void> => {
   const resp = fetch('http://localhost:3000/users', {
@@ -79,6 +85,7 @@ const createUser = async (
 
   const result: InternalUser = (await (await resp).json()).data;
   setUserInfo(result);
+  console.log('data from db', result);
 };
 
 const Home = () => {
@@ -93,17 +100,20 @@ const Home = () => {
       setIdToken(parseSub(result?.idToken || ''));
     };
     // TODO: figure out why this runs 2 times sometimes
-    getCreds();
-
+    if (!idToken) {
+      getCreds();
+    }
+    console.log(user?.name, user?.email, idToken);
     if (user?.name && user?.email && idToken) {
       const tempUser = {
-        firstName: user.name,
+        name: user.name,
         email: user.email,
-        accessToken: idToken,
+        accesstoken: idToken,
       };
       createUser(tempUser, setUserInfo);
+      console.log(userInfo);
     }
-  }, [user, idToken]);
+  }, [user]);
 
   const onLogin = async () => {
     await authorize(
