@@ -20,9 +20,9 @@ CREATE TABLE Company (
 );
 
 CREATE TABLE Events (
-  eventID uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
-  eventName VARCHAR(30),
-  eventDesc VARCHAR (200),
+  id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+  name VARCHAR(255),
+  description VARCHAR (255),
   eventDate date,
   pointReward int,
   popMin int,
@@ -33,10 +33,10 @@ CREATE TABLE Events (
 );
 
 CREATE TABLE Rewards (
-  rewardID uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
-  rewardName VARCHAR (30),
-  rewardDesc VARCHAR (200),
-  pointCost int,
+  id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+  name VARCHAR (30),
+  description VARCHAR (200),
+  cost int,
   companyID uuid,
   numAvailable int,
   FOREIGN KEY (companyID) REFERENCES Company(id)
@@ -47,8 +47,8 @@ CREATE TABLE Orders (
   rewardID uuid,
   orderDate date,
   PRIMARY KEY (userID, rewardID),
-  FOREIGN KEY (rewardID) REFERENCES Rewards(rewardID)
   FOREIGN KEY (userID) REFERENCES Users(id),
+  FOREIGN KEY (rewardID) REFERENCES Rewards(id)
 );
 
 CREATE TABLE Signups (
@@ -56,12 +56,13 @@ CREATE TABLE Signups (
   eventID uuid,
   attended bool,
   PRIMARY KEY (userID, eventID),
-  FOREIGN KEY (eventID) REFERENCES Events(eventID)
   FOREIGN KEY (userID) REFERENCES Users(id),
+  FOREIGN KEY (eventID) REFERENCES Events(id)
 );
 
+-- TODO: link posts table with likes and comments
 CREATE TABLE Posts (
-  postID uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   userID uuid,
   caption VARCHAR(255),
   datePosted date,
@@ -74,17 +75,20 @@ CREATE TABLE Likes (
   postID uuid,
   userID uuid,
   PRIMARY KEY (postID, userID),
-  FOREIGN KEY (postID) REFERENCES Posts(postID),
+  FOREIGN KEY (postID) REFERENCES Posts(id),
   FOREIGN KEY (userID) REFERENCES Users(id)
 );
 
 CREATE TABLE Comments (
-  commentID uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   body VARCHAR(255),
   datePosted date,
   userID uuid,
   postID uuid,
-  FOREIGN KEY (postID) REFERENCES Posts(postID),
+  FOREIGN KEY (postID) REFERENCES Posts(id),
   FOREIGN KEY (userID) REFERENCES Users(id)
 );
 
+-- Insert into Users
+INSERT INTO Users (name, accessToken, address, email, pointsCached, followers)
+VALUES ('John Doe', 'token12345', '1234 Main St', 'john.doe@example.com', 100, 20);
