@@ -5,8 +5,8 @@ CREATE TABLE Users (
   id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   name VARCHAR(255),
   accessToken VARCHAR(255),
-  address VARCHAR(50),
-  email VARCHAR(50),
+  address VARCHAR(255),
+  email VARCHAR(255),
   pointsCached int,
   followers int
 );
@@ -24,7 +24,7 @@ CREATE TABLE CompanyUser (
   userName VARCHAR(30),
   accessToken VARCHAR(255),
   address VARCHAR(50),
-  email VARCHAR(50),
+  email VARCHAR(255),
   companyID uuid,
   FOREIGN KEY (companyID) REFERENCES Company(companyID)
 );
@@ -34,8 +34,8 @@ CREATE TABLE Admins (
   nameFirst VARCHAR(30),
   nameLast VARCHAR(30),
   username VARCHAR(30),
-  accessToken VARCHAR(255),
-  email VARCHAR(50)
+  email VARCHAR(255),
+  accessToken VARCHAR(255)
 );
 
 CREATE TABLE Events (
@@ -47,8 +47,8 @@ CREATE TABLE Events (
   popMin int,
   popMax int,
   adminID uuid,
-  location VARCHAR(50),
   FOREIGN KEY (adminID) REFERENCES Admins(adminID)
+  location VARCHAR(255),
 );
 
 CREATE TABLE Rewards (
@@ -82,7 +82,7 @@ CREATE TABLE Signups (
 CREATE TABLE Posts (
   postID uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   userID uuid,
-  caption VARCHAR(256),
+  caption VARCHAR(255),
   datePosted date,
   likes int,
   comments int,
@@ -99,7 +99,7 @@ CREATE TABLE Likes (
 
 CREATE TABLE Comments (
   commentID uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
-  body VARCHAR(256),
+  body VARCHAR(255),
   datePosted date,
   userID uuid,
   postID uuid,
