@@ -44,40 +44,40 @@ const startApi = async () => {
       app.post("/users", async (req: Request, res: Response) => {
         const checkUser = await userExists(req.body.email);
         if (checkUser) {
-          if (checkUser.accesstoken === req.body.accessToken) {
+          console.log("user exists");
+          if (checkUser.accesstoken === req.body.accesstoken) {
             res.json({ data: checkUser, error: "user exists" });
             return;
-          }
-          if (checkUser.accessToken !== req.body.accessToken) {
+          } else {
             res.json({ data: {}, error: "user exists" });
             return;
           }
         }
-
+        console.log("creating a user");
         let newUser = {
-          nameFirst: req.body.name, // we can take the "name" from auth0
-          nameLast: "", // a user can change this in the profile
-          userName: req.body.name, // this can be the same as "nameFirst"
-          accessToken: req.body.accessToken, // from auth0
+          namefirst: req.body.name, // we can take the "name" from auth0
+          namelast: "", // a user can change this in the profile
+          username: req.body.name, // this can be the same as "nameFirst"
+          accesstoken: req.body.accesstoken, // from auth0
           address: "", // user will set it in profile later
           email: req.body.email, // this will come from auth0
-          pointsCached: 0,
+          pointscached: 0,
           followers: 0,
         };
 
         let query = `INSERT INTO Users (nameFirst, nameLast, userName, accessToken, address, email, pointsCached, followers) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
         await client.query(query, [
-          newUser.nameFirst,
-          newUser.nameLast,
-          newUser.userName,
-          newUser.accessToken,
+          newUser.namefirst,
+          newUser.namelast,
+          newUser.username,
+          newUser.accesstoken,
           newUser.address,
           newUser.email,
-          newUser.pointsCached,
+          newUser.pointscached,
           newUser.followers,
         ]);
 
-        res.json({ data: { newUser }, error: "" });
+        res.json({ data: { ...newUser }, error: "" });
       });
 
       //Return array of rewards
