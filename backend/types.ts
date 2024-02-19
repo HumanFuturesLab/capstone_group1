@@ -8,23 +8,13 @@ type Users = {
   email: string;
   pointsCached: number;
   followers: number;
+  companyID: UUID;
 };
 
 type Company = {
   id: UUID;
   companyName: string;
   email: string;
-};
-
-type CompanyUser = {
-  userID: UUID;
-  nameFirst: string;
-  nameLast: string;
-  userName: string;
-  password: string;
-  address: string;
-  email: string;
-  companyID: UUID;
 };
 
 type Admins = {

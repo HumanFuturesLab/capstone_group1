@@ -8,25 +8,14 @@ CREATE TABLE Users (
   address VARCHAR(255),
   email VARCHAR(255),
   pointsCached int,
-  followers int
+  followers int,
+  companyID uuid
 );
 
 CREATE TABLE Company (
   id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   companyName VARCHAR(30),
   email VARCHAR(50)
-);
-
-CREATE TABLE CompanyUser (
-  userID uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
-  nameFirst VARCHAR(30),
-  nameLast VARCHAR(30),
-  userName VARCHAR(30),
-  accessToken VARCHAR(255),
-  address VARCHAR(50),
-  email VARCHAR(255),
-  companyID uuid,
-  FOREIGN KEY (companyID) REFERENCES Company(id)
 );
 
 CREATE TABLE Admins (
