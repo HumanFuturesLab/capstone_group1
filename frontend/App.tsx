@@ -85,7 +85,6 @@ const createUser = async (
 
   const result: InternalUser = (await (await resp).json()).data;
   setUserInfo(result);
-  console.log('data from db', result);
 };
 
 const Home = () => {
@@ -100,10 +99,8 @@ const Home = () => {
       setIdToken(parseSub(result?.idToken || ''));
     };
     // TODO: figure out why this runs 2 times sometimes
-    if (!idToken) {
-      getCreds();
-    }
-    console.log(user?.name, user?.email, idToken);
+    getCreds();
+
     if (user?.name && user?.email && idToken) {
       const tempUser = {
         name: user.name,
@@ -111,9 +108,8 @@ const Home = () => {
         accesstoken: idToken,
       };
       createUser(tempUser, setUserInfo);
-      console.log(userInfo);
     }
-  }, [user]);
+  }, [user, idToken]);
 
   const onLogin = async () => {
     await authorize(
