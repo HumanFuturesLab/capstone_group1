@@ -2,10 +2,10 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE Users (
-  userID uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   nameFirst VARCHAR(30),
   nameLast VARCHAR(30),
   userName VARCHAR(30),
+  id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   accessToken VARCHAR(255),
   address VARCHAR(50),
   email VARCHAR(50),
@@ -68,8 +68,8 @@ CREATE TABLE Orders (
   rewardID uuid,
   orderDate date,
   PRIMARY KEY (userID, rewardID),
-  FOREIGN KEY (userID) REFERENCES Users(userID),
   FOREIGN KEY (rewardID) REFERENCES Rewards(rewardID)
+  FOREIGN KEY (userID) REFERENCES Users(id),
 );
 
 CREATE TABLE Signups (
@@ -77,8 +77,8 @@ CREATE TABLE Signups (
   eventID uuid,
   attended bool,
   PRIMARY KEY (userID, eventID),
-  FOREIGN KEY (userID) REFERENCES Users(userID),
   FOREIGN KEY (eventID) REFERENCES Events(eventID)
+  FOREIGN KEY (userID) REFERENCES Users(id),
 );
 
 CREATE TABLE Posts (
@@ -88,7 +88,7 @@ CREATE TABLE Posts (
   datePosted date,
   likes int,
   comments int,
-  FOREIGN KEY (userID) REFERENCES Users(userID)
+  FOREIGN KEY (userID) REFERENCES Users(id)
 );
 
 CREATE TABLE Likes (
@@ -96,7 +96,7 @@ CREATE TABLE Likes (
   userID uuid,
   PRIMARY KEY (postID, userID),
   FOREIGN KEY (postID) REFERENCES Posts(postID),
-  FOREIGN KEY (userID) REFERENCES Users(userID)
+  FOREIGN KEY (userID) REFERENCES Users(id)
 );
 
 CREATE TABLE Comments (
@@ -106,7 +106,7 @@ CREATE TABLE Comments (
   userID uuid,
   postID uuid,
   FOREIGN KEY (postID) REFERENCES Posts(postID),
-  FOREIGN KEY (userID) REFERENCES Users(userID)
+  FOREIGN KEY (userID) REFERENCES Users(id)
 );
 
 
