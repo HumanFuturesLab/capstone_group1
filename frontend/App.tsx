@@ -40,9 +40,7 @@ type IdToken = {
 export type InternalUser =
   | {
       id: string;
-      namefirst: string;
-      namelast: string;
-      username: string;
+      name: string;
       accesstoken: string;
       address: string;
       email: string;

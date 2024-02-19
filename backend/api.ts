@@ -55,9 +55,7 @@ const startApi = async () => {
         }
         console.log("creating a user");
         let newUser = {
-          namefirst: req.body.name, // we can take the "name" from auth0
-          namelast: "", // a user can change this in the profile
-          username: req.body.name, // this can be the same as "nameFirst"
+          name: req.body.name, // we can take the "name" from auth0
           accesstoken: req.body.accesstoken, // from auth0
           address: "", // user will set it in profile later
           email: req.body.email, // this will come from auth0
@@ -65,11 +63,9 @@ const startApi = async () => {
           followers: 0,
         };
 
-        let query = `INSERT INTO Users (nameFirst, nameLast, userName, accessToken, address, email, pointsCached, followers) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
+        let query = `INSERT INTO Users (name, accessToken, address, email, pointsCached, followers) VALUES ($1, $2, $3, $4, $5, $6);`;
         await client.query(query, [
-          newUser.namefirst,
-          newUser.namelast,
-          newUser.username,
+          newUser.name,
           newUser.accesstoken,
           newUser.address,
           newUser.email,
