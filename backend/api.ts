@@ -137,12 +137,20 @@ const startApi = async () => {
 
       app.post("/events", async (req, res) => {
         // Assuming you have middleware like app.use(express.json()) to parse JSON bodies
-        const { date, pointReward, popMin, popMax, userID, location } =
-          req.body;
+        const {
+          date,
+          pointReward,
+          name,
+          description,
+          popMin,
+          popMax,
+          userID,
+          location,
+        } = req.body;
 
         const query = `
-          INSERT INTO Events(date, pointReward, popMin, popMax, userID, location) 
-          VALUES($1, $2, $3, $4, $5, $6)
+          INSERT INTO Events(date, pointReward, name, description, popMin, popMax, userID, location) 
+          VALUES($1, $2, $3, $4, $5, $6, $7, $8)
           RETURNING *;
         `;
 
@@ -150,6 +158,8 @@ const startApi = async () => {
           const result = await client.query(query, [
             date,
             pointReward,
+            name,
+            description,
             popMin,
             popMax,
             userID,
