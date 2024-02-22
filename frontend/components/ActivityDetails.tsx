@@ -54,12 +54,10 @@ const ActivityDetails = ({activity}: ActivityProps) => {
     <View style={styles.container}>
       <Text style={styles.title}>{activity.name}</Text>
 
-      {activity.eventdate && (
+      {activity.date && (
         <View style={styles.detailRow}>
           <Icon name="event" size={20} />
-          <Text style={styles.detailText}>
-            {formatDate(activity.eventdate)}
-          </Text>
+          <Text style={styles.detailText}>{formatDate(activity.date)}</Text>
         </View>
       )}
 
