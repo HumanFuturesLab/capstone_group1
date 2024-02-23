@@ -4,10 +4,10 @@ import ListView from '../components/ListView';
 import RewardDetails from '../components/RewardDetails';
 
 export type Reward = {
-  rewardid: string;
-  rewardname: string;
-  rewarddesc: string;
-  pointcost: number;
+  id: string;
+  name: string;
+  description: string;
+  cost: number;
   companyid: string;
   numavailable: number;
 };
@@ -22,21 +22,12 @@ const getRewardsData = (
     .then(result => setRewardsData(result.data));
 };
 
-const formatRewardOptions = (options: Reward[]) => {
-  return options.map(option => {
-    return {
-      id: option.rewardid,
-      name: option.rewardname,
-    };
-  });
-};
-
 const Rewards = () => {
   const [rewardData, setRewardsData] = useState<Reward[]>([]);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
   const selectedReward = rewardData.filter(item => {
-    return item.rewardid === selectedItem;
+    return item.id === selectedItem;
   })[0];
 
   useEffect(() => {
@@ -45,10 +36,7 @@ const Rewards = () => {
 
   const Display =
     selectedItem === null ? (
-      <ListView
-        setSelectedItem={setSelectedItem}
-        items={formatRewardOptions(rewardData)}
-      />
+      <ListView setSelectedItem={setSelectedItem} items={rewardData} />
     ) : (
       <View style={styles.displayDetails}>
         <RewardDetails reward={selectedReward} />

@@ -1,40 +1,19 @@
 import { UUID } from "crypto";
 
 type Users = {
-  userID: UUID;
-  nameFirst: string;
-  nameLast: string;
-  userName: string;
+  id: UUID;
+  name: string;
   password: string;
   address: string;
   email: string;
   pointsCached: number;
   followers: number;
+  companyID: UUID;
 };
 
 type Company = {
-  companyID: UUID;
+  id: UUID;
   companyName: string;
-  email: string;
-};
-
-type CompanyUser = {
-  userID: UUID;
-  nameFirst: string;
-  nameLast: string;
-  userName: string;
-  password: string;
-  address: string;
-  email: string;
-  companyID: UUID;
-};
-
-type Admins = {
-  adminID: UUID;
-  nameFirst: string;
-  nameLast: string;
-  username: string;
-  password: string;
   email: string;
 };
 
@@ -44,7 +23,7 @@ type Events = {
   pointReward: number;
   popMin: number;
   popMax: number;
-  adminID: UUID;
+  userID: UUID;
   location: string;
 };
 

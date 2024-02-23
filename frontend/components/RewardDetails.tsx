@@ -24,14 +24,16 @@ const RewardDetails = ({reward}: RewardProps) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{reward.rewardname}</Text>
-      {reward.rewarddesc && (
-        <Text style={styles.description}>Description: {reward.rewarddesc}</Text>
+      <Text style={styles.title}>{reward.name}</Text>
+      {reward.description && (
+        <Text style={styles.description}>
+          Description: {reward.description}
+        </Text>
       )}
-      {reward.pointcost && (
+      {reward.cost && (
         <View style={styles.detailRow}>
           <Icon name="star" size={20} />
-          <Text style={styles.detailText}>{`${reward.pointcost} Points`}</Text>
+          <Text style={styles.detailText}>{`${reward.cost} Points`}</Text>
         </View>
       )}
       {reward.numavailable && (

@@ -1,6 +1,7 @@
 import React from 'react';
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
-type Option = {
+
+export type Option = {
   id: string;
   name: string;
 };

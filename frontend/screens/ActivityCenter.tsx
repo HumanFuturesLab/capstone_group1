@@ -4,14 +4,14 @@ import ListView from '../components/ListView';
 import ActivityDetails from '../components/ActivityDetails';
 
 export type Event = {
-  eventid: string;
-  eventname: string;
-  eventdesc: string;
-  eventdate: string;
+  id: string;
+  name: string;
+  description: string;
+  date: string;
   pointreward: number;
   popmin: number;
   popmax: number;
-  adminid: string;
+  userid: string;
   location: string;
 };
 
@@ -25,21 +25,12 @@ const getEventData = (
     .then(result => setEventsData(result.data));
 };
 
-const formatEventOptions = (options: Event[]) => {
-  return options.map(option => {
-    return {
-      id: option.eventid,
-      name: option.eventname,
-    };
-  });
-};
-
 const ActivityCenter = () => {
   const [eventData, setEventsData] = useState<Event[]>([]);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
   const selectedEvent = eventData.filter(item => {
-    return item.eventid === selectedItem;
+    return item.id === selectedItem;
   })[0];
 
   useEffect(() => {
@@ -48,10 +39,7 @@ const ActivityCenter = () => {
 
   const Display =
     selectedItem === null ? (
-      <ListView
-        setSelectedItem={setSelectedItem}
-        items={formatEventOptions(eventData || [])}
-      />
+      <ListView setSelectedItem={setSelectedItem} items={eventData || []} />
     ) : (
       <View style={styles.displayDetails}>
         <ActivityDetails activity={selectedEvent} />

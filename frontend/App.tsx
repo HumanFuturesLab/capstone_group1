@@ -39,17 +39,15 @@ type IdToken = {
 
 export type InternalUser =
   | {
-      userid: string;
-      namefirst: string;
-      namelast: string;
-      username: string;
+      id: string;
+      name: string;
       accesstoken: string;
       address: string;
       email: string;
       pointscached: number;
       followers: number;
     }
-  | undefined;
+  | undefined; // TODO: change this later
 
 type tempUser = {
   name: string;
