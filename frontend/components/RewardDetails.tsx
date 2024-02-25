@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import React, { useState } from 'react';
+import {View, Text, StyleSheet, TouchableOpacity, Alert, Modal, TouchableWithoutFeedback, TextInput} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Reward} from '../screens/Rewards';
 
@@ -20,6 +20,24 @@ const RewardDetails = ({reward}: RewardProps) => {
     };
 
     return date.toLocaleDateString(undefined, options);
+  };
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [code, setCode] = useState('');
+  
+  const rewardcode = reward.name;
+  //console.log(rewardcode)
+
+  const checkCode = () => {
+    if (code === rewardcode) {
+      //change this to update user's points in db
+      Alert.alert('Reward Redeemed.');
+      setIsModalVisible(false);
+    } else {
+      Alert.alert('Code Incorrect, resubmit.');
+      setIsModalVisible(false);
+    }
+    setCode('');
   };
 
   return (
@@ -46,12 +64,41 @@ const RewardDetails = ({reward}: RewardProps) => {
       )}
       <TouchableOpacity
         onPress={() => {
-          Alert.alert('Do stuff');
+          setIsModalVisible(true);
         }}
         style={styles.button}
         activeOpacity={0.8}>
-        <Text style={styles.buttonText}>Purchase</Text>
+        <Text style={styles.buttonText}>Enter Code</Text>
       </TouchableOpacity>
+
+      <Modal
+        visible={isModalVisible}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setIsModalVisible(false)}>
+        <TouchableWithoutFeedback onPress={() => setIsModalVisible(false)}>
+          <View style={styles.modalContainer}>
+            <TouchableWithoutFeedback onPress={() => {}}>
+              <View style={styles.modalContent}>
+                <View style={styles.textline}>
+                  <Text>Enter code: </Text>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={text => setCode(text)}
+                    value={code}
+                  />
+                </View>
+                <TouchableOpacity
+                  onPress={checkCode}
+                  style={styles.button}
+                  activeOpacity={0.8}>
+                  <Text style={styles.buttonText}>Submit</Text>
+                </TouchableOpacity>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
     </View>
   );
 };
@@ -97,6 +144,32 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    elevation: 5,
+    width: 250,
+  },
+  input: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
+    width: 200,
+  },
+  textline: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 
