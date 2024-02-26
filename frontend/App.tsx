@@ -14,7 +14,7 @@ import Auth0, {useAuth0, Auth0Provider, User} from 'react-native-auth0';
 import StorybookUI from './.storybook';
 import Config from 'react-native-config';
 import UserHome from './screens/UserHome';
-import {Context} from './context';
+import {LoggedInUserContext} from './context';
 import {SvgXml} from 'react-native-svg';
 import {groupSvg, framexml, gleotextxml} from './Images/AppSvgs';
 import base64 from 'react-native-base64';
@@ -37,19 +37,22 @@ type IdToken = {
   sid: string;
 };
 
-export type InternalUser =
-  | {
-      id: string;
-      name: string;
-      accesstoken: string;
-      address: string;
-      email: string;
-      pointscached: number;
-      followers: number;
-    }
-  | undefined; // TODO: change this later
+export type InternalUser = {
+  id: string;
+  name: string;
+  accesstoken: string;
+  address: string;
+  email: string;
+  pointscached: number;
+  followers: number;
+};
 
-type tempUser = {
+type GetUser = {
+  data: InternalUser;
+  error: string;
+};
+
+type TempUser = {
   name: string;
   email: string;
   accesstoken: string;
@@ -69,10 +72,12 @@ const parseSub = (s: string): string => {
   }
 };
 
-const createUser = async (
-  data: tempUser,
+const getUser = async (
+  data: TempUser,
   setUserInfo: React.Dispatch<React.SetStateAction<InternalUser | undefined>>,
+  setUserInfoLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ): Promise<void> => {
+  setUserInfoLoading(true);
   const resp = fetch('http://localhost:3000/users', {
     method: 'POST',
     headers: {
@@ -83,12 +88,14 @@ const createUser = async (
 
   const result: InternalUser = (await (await resp).json()).data;
   setUserInfo(result);
+  setUserInfoLoading(false);
 };
 
 const Home = () => {
   const {authorize, clearSession, user, getCredentials, error, isLoading} =
     useAuth0();
   const [userInfo, setUserInfo] = useState<InternalUser | undefined>();
+  const [userInfoLoading, setUserInfoLoading] = useState<boolean>(false);
   const [idToken, setIdToken] = useState<string | undefined>();
 
   useEffect(() => {
@@ -105,7 +112,7 @@ const Home = () => {
         email: user.email,
         accesstoken: idToken,
       };
-      createUser(tempUser, setUserInfo);
+      getUser(tempUser, setUserInfo, setUserInfoLoading);
     }
   }, [user, idToken]);
 
@@ -118,7 +125,7 @@ const Home = () => {
     );
   };
 
-  if (isLoading) {
+  if (isLoading || userInfoLoading) {
     return (
       <View style={styles.container}>
         <Text>Loading</Text>
@@ -126,22 +133,9 @@ const Home = () => {
     );
   }
 
-  return (
-    <>
-      {user && (
-        <Context.Provider value={userInfo}>
-          <NavigationContainer>
-            <Stack.Navigator>
-              <Stack.Screen
-                name="TabNavigator"
-                component={UserHome}
-                options={{headerShown: false}}
-              />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </Context.Provider>
-      )}
-      {!user && (
+  if (!userInfo) {
+    return (
+      <>
         <View style={styles.container}>
           <SvgXml xml={framexml} style={styles.svg1}></SvgXml>
           <SvgXml xml={gleotextxml} style={styles.svg2}></SvgXml>
@@ -155,7 +149,25 @@ const Home = () => {
           </TouchableOpacity>
           <SvgXml xml={groupSvg} style={styles.svg3}></SvgXml>
         </View>
-      )}
+        {error && <Text style={styles.error}>{error.message}</Text>}
+      </>
+    );
+  }
+
+  return (
+    <>
+      <LoggedInUserContext.Provider
+        value={{user: userInfo, setUserInfo: setUserInfo}}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="TabNavigator"
+              component={UserHome}
+              options={{headerShown: false}}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </LoggedInUserContext.Provider>
       {error && <Text style={styles.error}>{error.message}</Text>}
     </>
   );

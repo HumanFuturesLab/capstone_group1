@@ -1,20 +1,21 @@
 import {Button, SafeAreaView, StyleSheet, Text} from 'react-native';
 import React, {useContext} from 'react';
 import {useAuth0} from 'react-native-auth0';
-import {Context} from '../context';
+import {useLoggedInUserContext} from '../context';
 
 const Profile = () => {
-  const value = useContext(Context);
+  const {user, setUserInfo} = useLoggedInUserContext();
   const {clearSession} = useAuth0();
   const onLogout = async () => {
     await clearSession({}, {});
+    setUserInfo(undefined);
   };
 
   return (
     <SafeAreaView>
       <Text>Profile</Text>
       <Button onPress={onLogout} title={'Log Out'} />
-      {value && <Text>{value.email}</Text>}
+      {user && <Text>{user.email}</Text>}
     </SafeAreaView>
   );
 };
