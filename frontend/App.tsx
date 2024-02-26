@@ -86,8 +86,15 @@ const getUser = async (
     body: JSON.stringify(data),
   });
 
-  const result: InternalUser = (await (await resp).json()).data;
-  setUserInfo(result);
+  const result: GetUser = await (await resp).json();
+  const incorrectAccessToken: boolean = !!result.error && !result.data;
+
+  if (incorrectAccessToken) {
+    console.log('could not get user data');
+    return;
+  }
+
+  setUserInfo(result.data);
   setUserInfoLoading(false);
 };
 
