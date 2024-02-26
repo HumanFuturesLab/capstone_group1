@@ -45,6 +45,7 @@ export type InternalUser = {
   email: string;
   pointscached: number;
   followers: number;
+  isAdmin: boolean;
 };
 
 type GetUser = {
