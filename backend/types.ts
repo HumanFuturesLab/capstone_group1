@@ -1,9 +1,9 @@
 import { UUID } from "crypto";
 
-type Users = {
+export type User = {
   id: UUID;
   name: string;
-  password: string;
+  accessToken: string;
   address: string;
   email: string;
   pointsCached: number;
@@ -66,4 +66,17 @@ type Comments = {
   datePosted: Date;
   userID: UUID;
   postID: UUID;
+};
+
+export type JWTPayload = {
+  name?: string;
+  email?: string;
+  iss?: string;
+  sub?: string;
+  aud?: string | string[];
+  exp?: number;
+  nbf?: number;
+  iat?: number;
+  jti?: string;
+  roles?: string[];
 };
