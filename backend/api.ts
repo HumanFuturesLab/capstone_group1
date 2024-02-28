@@ -1,10 +1,12 @@
 import express, { Request, Response } from "express";
+import passport from "./auth0config"; // Import passport configuration
 import { Pool, Client } from "pg";
 // import { UUID } from "bson";
 
 // express app
 const app = express();
 app.use(express.json());
+app.use(passport.initialize());
 
 const startApi = async () => {
   const client = new Client({
@@ -35,46 +37,23 @@ const startApi = async () => {
       }
 
       // Return data object of users
-      app.get("/users", async (req, res) => {
+      app.get("/users", async (req: Request, res: Response) => {
         let x = await client.query("SELECT * FROM users;");
         res.json({ data: x["rows"] });
       });
 
-      // create a user
-      app.post("/users", async (req: Request, res: Response) => {
-        const checkUser = await userExists(req.body.email);
-        if (checkUser) {
-          console.log("user exists");
-          if (checkUser.accesstoken === req.body.accesstoken) {
-            res.json({ data: checkUser, error: "user exists" });
-            return;
+      app.post(
+        "/users",
+        passport.authenticate("jwt", { session: false }),
+        async (req, res) => {
+          if (req.user) {
+            res.json({ data: req.user, error: null });
           } else {
-            res.json({ data: {}, error: "user exists" });
-            return;
+            // TODO: make this more robust cause now this wont get hit
+            res.status(404).json({ data: {}, error: "User not found" });
           }
         }
-        console.log("creating a user");
-        let newUser = {
-          name: req.body.name, // we can take the "name" from auth0
-          accesstoken: req.body.accesstoken, // from auth0
-          address: "", // user will set it in profile later
-          email: req.body.email, // this will come from auth0
-          pointscached: 0,
-          followers: 0,
-        };
-
-        let query = `INSERT INTO Users (name, accessToken, address, email, pointsCached, followers) VALUES ($1, $2, $3, $4, $5, $6);`;
-        await client.query(query, [
-          newUser.name,
-          newUser.accesstoken,
-          newUser.address,
-          newUser.email,
-          newUser.pointscached,
-          newUser.followers,
-        ]);
-
-        res.json({ data: { ...newUser }, error: "" });
-      });
+      );
 
       //Return array of rewards
       app.get("/rewards/:userID", async (req, res) => {
