@@ -53,28 +53,8 @@ type GetUser = {
   error: string;
 };
 
-type TempUser = {
-  name: string;
-  email: string;
-  accesstoken: string;
-};
-
-const parseSub = (s: string): string => {
-  try {
-    // Split the JWT to get the payload
-    const dataPart = s.split('.')[1];
-    const decodedPayload = base64.decode(dataPart).replace(/\u0000/g, '');
-    // Parse the JSON string into an object
-    const result: IdToken = JSON.parse(decodedPayload);
-    return result.sub;
-  } catch (error) {
-    console.log('ERROR DECODING', error);
-    return '';
-  }
-};
-
 const getUser = async (
-  data: TempUser,
+  token: string,
   setUserInfo: React.Dispatch<React.SetStateAction<InternalUser | undefined>>,
   setUserInfoLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ): Promise<void> => {
@@ -83,8 +63,8 @@ const getUser = async (
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(data),
   });
 
   const result: GetUser = await (await resp).json();
@@ -100,8 +80,7 @@ const getUser = async (
 };
 
 const Home = () => {
-  const {authorize, clearSession, user, getCredentials, error, isLoading} =
-    useAuth0();
+  const {authorize, user, getCredentials, error, isLoading} = useAuth0();
   const [userInfo, setUserInfo] = useState<InternalUser | undefined>();
   const [userInfoLoading, setUserInfoLoading] = useState<boolean>(false);
   const [idToken, setIdToken] = useState<string | undefined>();
@@ -109,18 +88,13 @@ const Home = () => {
   useEffect(() => {
     const getCreds = async () => {
       let result = await getCredentials();
-      setIdToken(parseSub(result?.idToken || ''));
+      setIdToken(result?.idToken || '');
     };
-    // TODO: figure out why this runs 2 times sometimes
+
     getCreds();
 
     if (user?.name && user?.email && idToken) {
-      const tempUser = {
-        name: user.name,
-        email: user.email,
-        accesstoken: idToken,
-      };
-      getUser(tempUser, setUserInfo, setUserInfoLoading);
+      getUser(idToken, setUserInfo, setUserInfoLoading);
     }
   }, [user, idToken]);
 
