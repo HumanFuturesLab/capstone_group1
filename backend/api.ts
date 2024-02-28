@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import passport from "./auth0config"; // Import passport configuration
+import passport from "./passport"; // Import passport configuration
 import { Pool, Client } from "pg";
 // import { UUID } from "bson";
 
