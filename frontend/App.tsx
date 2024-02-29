@@ -21,22 +21,6 @@ import base64 from 'react-native-base64';
 
 const Stack = createNativeStackNavigator();
 
-type IdToken = {
-  'https://com.gleo.ios/first_login': boolean;
-  nickname: string;
-  name: string;
-  picture: string;
-  updated_at: string;
-  email: string;
-  email_verified: boolean;
-  iss: string;
-  aud: string;
-  iat: number;
-  exp: number;
-  sub: string;
-  sid: string;
-};
-
 export type InternalUser = {
   id: string;
   name: string;
