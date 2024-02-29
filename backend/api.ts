@@ -1,7 +1,6 @@
 import express, { Request, Response } from "express";
-import passport from "./passport"; // Import passport configuration
-import { Pool, Client } from "pg";
-// import { UUID } from "bson";
+import passport from "./passport";
+import { Client } from "pg";
 
 // express app
 const app = express();

@@ -1,15 +1,8 @@
 import 'react-native-gesture-handler';
-import React, {createElement, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {
-  Button,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  DevSettings,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import Auth0, {useAuth0, Auth0Provider, User} from 'react-native-auth0';
 import StorybookUI from './.storybook';
 import Config from 'react-native-config';
@@ -17,7 +10,6 @@ import UserHome from './screens/UserHome';
 import {LoggedInUserContext} from './context';
 import {SvgXml} from 'react-native-svg';
 import {groupSvg, framexml, gleotextxml} from './Images/AppSvgs';
-import base64 from 'react-native-base64';
 
 const Stack = createNativeStackNavigator();
 
