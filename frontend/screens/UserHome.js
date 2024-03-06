@@ -6,7 +6,7 @@ import townIcon from '../Images/townIcon.png';
 import activityIcon from '../Images/activityIcon.png';
 import rewardsIcon from '../Images/rewardsIcon.png';
 import profileIcon from '../Images/profileIcon.png';
-import ActivityCentre from './ActivitiyCenter.tsx';
+import ActivityCentre from './ActivitiyCenter.js';
 import Dashboard from './Dashboard.js';
 import Profile from './Profile.tsx';
 import Rewards from './Rewards.js';
