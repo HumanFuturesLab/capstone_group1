@@ -14,6 +14,14 @@ const startApi = async () => {
     password: "postgres",
     port: 5432,
   });
+
+  const userExists = async (email: string) => {
+    // need to give it a user type later
+    let query = `SELECT * FROM users WHERE email=$1;`;
+    let resp = (await client.query(query, [email])).rows[0]; // if there is a row in the resp
+    return resp;
+  };
+
   client.connect(async (err) => {
     if (err) {
       console.error("connection error", err.stack);
@@ -30,6 +38,42 @@ const startApi = async () => {
       app.get("/users", async (req, res) => {
         let x = await client.query("SELECT * FROM users;");
         res.json({ data: x["rows"] });
+      });
+
+      // create a user
+      app.post("/users", async (req: Request, res: Response) => {
+        const checkUser = await userExists(req.body.email);
+        if (checkUser) {
+          console.log("user exists");
+          if (checkUser.accesstoken === req.body.accesstoken) {
+            res.json({ data: checkUser, error: "user exists" });
+            return;
+          } else {
+            res.json({ data: {}, error: "user exists" });
+            return;
+          }
+        }
+        console.log("creating a user");
+        let newUser = {
+          name: req.body.name, // we can take the "name" from auth0
+          accesstoken: req.body.accesstoken, // from auth0
+          address: "", // user will set it in profile later
+          email: req.body.email, // this will come from auth0
+          pointscached: 0,
+          followers: 0,
+        };
+
+        let query = `INSERT INTO Users (name, accessToken, address, email, pointsCached, followers) VALUES ($1, $2, $3, $4, $5, $6);`;
+        await client.query(query, [
+          newUser.name,
+          newUser.accesstoken,
+          newUser.address,
+          newUser.email,
+          newUser.pointscached,
+          newUser.followers,
+        ]);
+
+        res.json({ data: { ...newUser }, error: "" });
       });
 
       //Return array of rewards
@@ -93,22 +137,32 @@ const startApi = async () => {
 
       app.post("/events", async (req, res) => {
         // Assuming you have middleware like app.use(express.json()) to parse JSON bodies
-        const { eventDate, pointReward, popMin, popMax, adminID, location } =
-          req.body;
+        const {
+          date,
+          pointReward,
+          name,
+          description,
+          popMin,
+          popMax,
+          userID,
+          location,
+        } = req.body;
 
         const query = `
-          INSERT INTO Events(eventDate, pointReward, popMin, popMax, adminID, location) 
-          VALUES($1, $2, $3, $4, $5, $6)
+          INSERT INTO Events(date, pointReward, name, description, popMin, popMax, userID, location) 
+          VALUES($1, $2, $3, $4, $5, $6, $7, $8)
           RETURNING *;
         `;
 
         try {
           const result = await client.query(query, [
-            eventDate,
+            date,
             pointReward,
+            name,
+            description,
             popMin,
             popMax,
-            adminID,
+            userID,
             location,
           ]);
 
