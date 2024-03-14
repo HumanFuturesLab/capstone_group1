@@ -1,21 +1,18 @@
-import {StyleSheet, View, Image} from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import dashboardIcon from '../Images/dashboardIcon.png';
-import townIcon from '../Images/townIcon.png';
+import { Image, StyleSheet, View } from 'react-native';
 import activityIcon from '../Images/activityIcon.png';
-import rewardsIcon from '../Images/rewardsIcon.png';
+import dashboardIcon from '../Images/dashboardIcon.png';
 import profileIcon from '../Images/profileIcon.png';
+import rewardsIcon from '../Images/rewardsIcon.png';
+import townIcon from '../Images/townIcon.png';
 import ActivityCentre from './ActivityCenter';
 import Dashboard from './Dashboard.js';
 import Profile from './Profile.tsx';
 import Rewards from './Rewards.tsx';
 import TownSquare from './TownSquare.js';
 
-
-
 const Tab = createBottomTabNavigator();
-
 const UserHome = () => {
   return (
     <Tab.Navigator

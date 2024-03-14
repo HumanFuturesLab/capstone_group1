@@ -6,7 +6,7 @@ type Users = {
   password: string;
   address: string;
   email: string;
-  points: number;
+  pointsCached: number;
   followers: number;
   companyID: UUID;
 };
