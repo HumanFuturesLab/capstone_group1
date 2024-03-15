@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { Client } from "pg";
+import { Pool, Client } from "pg";
 // import { UUID } from "bson";
 
 // express app
