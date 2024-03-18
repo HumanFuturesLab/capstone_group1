@@ -99,27 +99,11 @@ const startApi = async () => {
         res.json({ data: allEvents.rows });
       });
 
-      app.post("/events", async (req, res) => {
-        // Assuming you have middleware like app.use(express.json()) to parse JSON bodies
-        const {
-          date,
-          pointReward,
-          name,
-          description,
-          popMin,
-          popMax,
-          userID,
-          location,
-        } = req.body;
-
-        const query = `
-          INSERT INTO Events(date, pointReward, name, description, popMin, popMax, userID, location) 
-          VALUES($1, $2, $3, $4, $5, $6, $7, $8)
-          RETURNING *;
-        `;
-
-        try {
-          const result = await client.query(query, [
+      app.post(
+        "/events",
+        passport.authenticate("admin", { session: false }),
+        async (req, res) => {
+          const {
             date,
             pointReward,
             name,
@@ -128,20 +112,40 @@ const startApi = async () => {
             popMax,
             userID,
             location,
-          ]);
+          } = req.body;
 
-          // Check if the insert was successful and return the newly created event
-          if (result.rows && result.rows.length > 0) {
-            res.status(201).json(result.rows[0]); // Send the inserted event back to the client
-          } else {
-            // Handle the case where no rows were returned
-            res.status(500).send("Failed to create the event");
+          const query = `
+          INSERT INTO Events(date, pointReward, name, description, popMin, popMax, userID, location) 
+          VALUES($1, $2, $3, $4, $5, $6, $7, $8)
+          RETURNING *;
+        `;
+
+          try {
+            const result = await client.query(query, [
+              date,
+              pointReward,
+              name,
+              description,
+              popMin,
+              popMax,
+              userID,
+              location,
+            ]);
+
+            // Check if the insert was successful and return the newly created event
+            if (result.rows && result.rows.length > 0) {
+              res.status(201).json(result.rows[0]); // Send the inserted event back to the client
+            } else {
+              // Handle the case where no rows were returned
+              res.status(500).send("Failed to create the event");
+            }
+          } catch (err: any) {
+            console.error("Error executing query:", err.message);
+            res.status(500).send("Server Error: Unable to create event");
           }
-        } catch (err: any) {
-          console.error("Error executing query:", err.message);
-          res.status(500).send("Server Error: Unable to create event");
         }
-      });
+      );
+
       app.post(
         "/rewards",
         passport.authenticate("admin", { session: false }),
