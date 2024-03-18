@@ -17,6 +17,7 @@ export type InternalUser = {
   id: string;
   name: string;
   accesstoken: string;
+  idtoken: string;
   address: string;
   email: string;
   pointscached: number;
@@ -24,7 +25,7 @@ export type InternalUser = {
   isadmin: boolean;
 };
 
-type GetUser = {
+export type GetUser = {
   data: InternalUser;
   error: string;
 };
@@ -43,7 +44,8 @@ const getUser = async (
     },
   });
 
-  const result: GetUser = await (await resp).json();
+  let result: GetUser = await (await resp).json();
+  result.data.idtoken = token;
   const incorrectAccessToken: boolean = !!result.error && !result.data;
 
   if (incorrectAccessToken) {
