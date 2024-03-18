@@ -142,6 +142,32 @@ const startApi = async () => {
           res.status(500).send("Server Error: Unable to create event");
         }
       });
+      app.post(
+        "/rewards",
+        passport.authenticate("admin", { session: false }),
+        async (req: Request, res: Response) => {
+          const { name, description, cost, companyID, numAvailable } = req.body;
+          const query = `INSERT INTO Rewards(name, description, cost, companyid, numavailable) VALUES ($1, $2, $3, $4, $5) RETURNING *;`;
+          try {
+            const result = await client.query(query, [
+              name,
+              description,
+              cost,
+              companyID,
+              numAvailable,
+            ]);
+
+            if (result.rows && result.rows[0]) {
+              res.status(201).json(result.rows[0]);
+            } else {
+              res.status(500).send("Failed to create the reward");
+            }
+          } catch (err: any) {
+            console.error("Error executing query:", err.message);
+            res.status(500).send("Server Error: Unable to create event");
+          }
+        }
+      );
 
       app.listen(3000, () => {
         console.log("listening on 3000");
