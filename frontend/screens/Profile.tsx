@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   SafeAreaView,
   ScrollView,
@@ -12,6 +13,7 @@ import {useAuth0} from 'react-native-auth0';
 import {useLoggedInUserContext} from '../context';
 import {Reward} from './Rewards';
 import {Event} from './ActivityCenter';
+import {GetUser} from '../App';
 
 const Profile = () => {
   const {user, setUserInfo} = useLoggedInUserContext();
@@ -45,11 +47,46 @@ const Profile = () => {
     }));
   };
 
-  const handleSubmit1 = () => {
+  const handleSubmit1 = async () => {
     console.log(form1);
+    console.log(user.accesstoken);
+    if (
+      !form1.date ||
+      !form1.description ||
+      !form1.name ||
+      !form1.pointreward ||
+      !form1.location
+    ) {
+      Alert.alert('form not complete');
+    }
+    const resp = await fetch('http://localhost:3000/events', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.idtoken}`,
+      },
+      body: JSON.stringify(form1),
+    });
+
+    // const result: GetUser = await (await resp).json();
+    // do something with the result
   };
-  const handleSubmit2 = () => {
+  const handleSubmit2 = async () => {
     console.log(form2);
+    if (!form2.name || !form2.description || !form2.cost) {
+      Alert.alert('form not complete');
+    }
+    const resp = await fetch('http://localhost:3000/rewards', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.idtoken}`,
+      },
+      body: JSON.stringify(form2),
+    });
+
+    // const result: GetUser = await (await resp).json();
+    // do something with the result
   };
 
   const onLogout = async () => {
