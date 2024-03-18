@@ -72,14 +72,7 @@ const startApi = async () => {
       });
 
       app.get("/rewards", async (req, res) => {
-        // if (!isValidObjectId(param)) {
-        //   res.status(400);
-        //   res.json({ data: "Invalid ID" });
-        //   return;
-        // }
-
         let allRewards = await client.query("SELECT * FROM rewards;");
-
         res.json({ data: allRewards["rows"] });
       });
 

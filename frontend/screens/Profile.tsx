@@ -57,9 +57,6 @@ const Profile = () => {
     setUserInfo(undefined);
   };
 
-  useEffect(() => {
-    // make request back to the server to create stuff
-  }, []);
   return (
     <SafeAreaView>
       <ScrollView>
