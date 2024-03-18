@@ -3,6 +3,7 @@ import {
   Strategy as JwtStrategy,
   ExtractJwt,
   StrategyOptions,
+  Strategy,
 } from "passport-jwt";
 import { JWTPayload } from "./types";
 import jwksRsa from "jwks-rsa";
@@ -30,6 +31,7 @@ const client = new Pool({
 });
 
 passport.use(
+  "jwt",
   new JwtStrategy(opts, async (jwt_payload: JWTPayload, done) => {
     try {
       const query = `SELECT * from Users WHERE accessToken = $1;`;
@@ -56,6 +58,24 @@ passport.use(
           user.followers,
         ]);
         return done(null, user);
+      }
+    } catch (err) {
+      console.error("Database connection error", err);
+      done(err);
+    }
+  })
+);
+
+passport.use(
+  "admin",
+  new JwtStrategy(opts, async (jwt_payload: JWTPayload, done) => {
+    try {
+      const query = `SELECT isadmin FROM users where accesstoken=$1;`;
+      const { rows } = await client.query(query, [jwt_payload.sub]);
+      if (rows[0].isadmin) {
+        return done(null, true);
+      } else {
+        return done(null, false);
       }
     } catch (err) {
       console.error("Database connection error", err);
