@@ -7,75 +7,59 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useAuth0} from 'react-native-auth0';
 import {useLoggedInUserContext} from '../context';
-import Form from '../components/Form';
 import {Reward} from './Rewards';
 import {Event} from './ActivityCenter';
 
-export type IndexableEvent = {
-  [key: string]: any;
-} & Partial<Event>;
-
-export type IndexableReward = {
-  [key: string]: any;
-} & Partial<Reward>;
-
-const initalEventState: Partial<Event> = {
-  name: '',
-  description: '',
-  date: '',
-  pointreward: 0,
-  location: '',
-};
-
-const initialRewardState: Partial<Reward> = {
-  name: '',
-  description: '',
-  cost: 0,
-};
-
 const Profile = () => {
-  const [form, setForm] = useState<IndexableEvent | IndexableReward>({});
   const {user, setUserInfo} = useLoggedInUserContext();
   const {clearSession} = useAuth0();
+
+  const [form1, setForm1] = useState<Partial<Event>>({
+    name: '',
+    description: '',
+    date: '',
+    pointreward: 0,
+    location: '',
+  });
+
+  const [form2, setForm2] = useState<Partial<Reward>>({
+    name: '',
+    description: '',
+    cost: 0,
+  });
+
+  const handleChange1 = (name: string, value: any) => {
+    setForm1(prevForm => ({
+      ...prevForm,
+      [name]: value,
+    }));
+  };
+
+  const handleChange2 = (name: string, value: any) => {
+    setForm2(prevForm => ({
+      ...prevForm,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit1 = () => {
+    console.log(form1);
+  };
+  const handleSubmit2 = () => {
+    console.log(form2);
+  };
 
   const onLogout = async () => {
     await clearSession({}, {});
     setUserInfo(undefined);
   };
 
-  const handleSubmit = () => {
-    console.log(form);
-  };
-
-  const handleClear = () => {
-    setForm(initalEventState);
-  };
-
-  const handleChange = (name: string, value: string) => {
-    const updatedValue = name === 'pointreward' ? parseInt(value, 10) : value;
-
-    setForm(prevForm => ({
-      ...prevForm,
-      [name]: updatedValue,
-    }));
-  };
-
-  const eventFormElements: string[] = [
-    'Event Name',
-    'Event Description',
-    'Event Date',
-    'Event Pointreward',
-    'Event Location',
-  ];
-  const rewardFormElements: string[] = [
-    'Reward Name',
-    'Reward Description',
-    'Reward Cost',
-  ];
-
+  useEffect(() => {
+    // make request back to the server to create stuff
+  }, []);
   return (
     <SafeAreaView>
       <ScrollView>
@@ -84,22 +68,63 @@ const Profile = () => {
         <Text>{user.email}</Text>
         {user.isadmin && (
           <>
-            <Form
-              form={form}
-              elements={eventFormElements}
-              type="Event"
-              handleSubmit={handleSubmit}
-              handleClear={handleClear}
-              handleChange={handleChange}
-            />
-            <Form
-              form={form}
-              elements={rewardFormElements}
-              type="Reward"
-              handleSubmit={handleSubmit}
-              handleClear={handleClear}
-              handleChange={handleChange}
-            />
+            <View style={styles.container}>
+              <Text>Name:</Text>
+              <TextInput
+                style={styles.input}
+                value={form1.name}
+                onChangeText={value => handleChange1('name', value)}
+              />
+              <Text>Description:</Text>
+              <TextInput
+                style={styles.input}
+                value={form1.description}
+                onChangeText={value => handleChange1('description', value)}
+              />
+              <Text>Date:</Text>
+              <TextInput
+                style={styles.input}
+                value={form1.date}
+                onChangeText={value => handleChange1('date', value)}
+              />
+              <Text>Point Reward:</Text>
+              <TextInput
+                style={styles.input}
+                value={form1.pointreward!.toString()}
+                onChangeText={value =>
+                  handleChange1('pointreward', Number(value))
+                }
+                keyboardType="numeric"
+              />
+              <Text>Location:</Text>
+              <TextInput
+                style={styles.input}
+                value={form1.location}
+                onChangeText={value => handleChange1('location', value)}
+              />
+              <Button title="Submit" onPress={handleSubmit1} />
+            </View>
+            <View style={styles.container}>
+              <Text>Name:</Text>
+              <TextInput
+                style={styles.input}
+                value={form2.name}
+                onChangeText={value => handleChange2('name', value)}
+              />
+              <Text>Description:</Text>
+              <TextInput
+                style={styles.input}
+                value={form2.description}
+                onChangeText={value => handleChange2('description', value)}
+              />
+              <Text>Cost:</Text>
+              <TextInput
+                style={styles.input}
+                value={form2.cost!.toString()}
+                onChangeText={value => handleChange2('cost', Number(value))}
+              />
+              <Button title="Submit" onPress={handleSubmit2} />
+            </View>
           </>
         )}
       </ScrollView>
@@ -122,17 +147,10 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    marginLeft: 20,
-    marginRight: 20,
-    marginTop: 5,
-    marginBottom: 5,
+    borderColor: 'gray',
     borderWidth: 1,
-    padding: 5,
-    borderColor: '#007BFF',
-    borderRadius: 5,
-    color: '#333333',
-    fontSize: 16,
-    backgroundColor: '#FFFFFF',
+    marginBottom: 20,
+    padding: 10,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -141,5 +159,10 @@ const styles = StyleSheet.create({
   },
   space: {
     width: 10,
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 20,
   },
 });
