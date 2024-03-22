@@ -8,6 +8,7 @@ The Gleo Project is a groundbreaking social media platform designed to inspire a
 Ensure you have installed Node.js and npm \
 Mac: `brew install node` \
 Windows: https://docs.npmjs.com/downloading-and-installing-node-js-and-npm \
+Ensure you have installed docker \
 Clone the github repository
 
 ### Frontend Start
@@ -25,10 +26,10 @@ Windows Android:
 ```
 
 ### Backend Start
-#### Installing the needed files (Only do this the first time)
+#### Navigate to the backend folder, then use the following commands (must be done before starting frontend):
 Mac IOS:
 ```
-*** WIP ***
+docker-compose up //ensure you have docker running
 ```
 Windows:
 ```
@@ -38,7 +39,7 @@ npm i --save-dev nodemon
 #### Running the backend (Do this every time)
 Mac IOS:
 ```
-*** WIP ***
+npx nodemon api.ts
 ```
 Windows:
 ```
