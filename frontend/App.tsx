@@ -164,8 +164,8 @@ const Home = () => {
 const App = () => {
   return (
     <Auth0Provider
-      domain={'dev-tn5qd8swaoxt8gn0.us.auth0.com'}
-      clientId={'pRAokchRzJYk61f6hyNJIYNlgmnjEM5r'}>
+    domain={'dev-tn5qd8swaoxt8gn0.us.auth0.com'}
+    clientId={'pRAokchRzJYk61f6hyNJIYNlgmnjEM5r'}>
       <Home />
     </Auth0Provider>
   );
