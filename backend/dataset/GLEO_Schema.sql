@@ -8,7 +8,7 @@ CREATE TABLE Users (
   address VARCHAR(255),
   email VARCHAR(255),
   pointsCached INT,
-  followers INT,
+  followers INT,    
   companyID uuid,
   isAdmin boolean DEFAULT false
 );
@@ -28,6 +28,7 @@ CREATE TABLE Events (
   popMin INT,
   popMax INT,
   userID uuid,
+  key VARCHAR(255),
   location VARCHAR(255),
   FOREIGN KEY (userID) REFERENCES Users(id)
 );
