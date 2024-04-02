@@ -179,6 +179,23 @@ const startApi = async () => {
         }
       });
 
+      app.get("/attend", async (req: Request, res: Response) => {
+        const query = `SELECT key from events where key=$1`;
+
+        try {
+          const result = await client.query(query, [req.body.key]);
+          if (result.rows && result.rows.length > 0) {
+            await client.query(``);
+            res.status(201).json({ data: "you got the points" });
+          } else {
+            res.status(500).send("Invalid key");
+          }
+        } catch (err: any) {
+          console.error("Error executing query:", err.message);
+          res.status(500).send("Server Error: bad key");
+        }
+      });
+
       app.listen(3000, () => {
         console.log("listening on 3000");
       });
