@@ -97,11 +97,18 @@ const Profile = () => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <Text>Profile</Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.textStyle}>Profile</Text>
+          <Text>Email: {user.email}</Text>
+        </View>
+        
         <Button onPress={onLogout} title={'Log Out'} />
-        <Text>{user.email}</Text>
+        
         {user.isadmin && (
           <>
+            <View style={styles.textContainer}>
+              <Text style={styles.subheader}>Add Activity</Text>
+            </View>
             <View style={styles.container}>
               <Text>Name:</Text>
               <TextInput
@@ -137,6 +144,9 @@ const Profile = () => {
                 onChangeText={value => handleChange1('location', value)}
               />
               <Button title="Submit" onPress={handleSubmit1} />
+            </View>
+            <View style={styles.textContainer}>
+              <Text style={styles.subheader}>Add Reward</Text>
             </View>
             <View style={styles.container}>
               <Text>Name:</Text>
@@ -199,4 +209,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 20,
   },
+  textStyle: {
+    fontSize: 48,
+    fontWeight: 'bold',
+    paddingBottom: 15,
+  },
+  textContainer: {
+    alignItems: 'center',
+  },
+  subheader: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    paddingTop: 10,
+  }
 });

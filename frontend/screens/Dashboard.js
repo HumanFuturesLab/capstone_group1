@@ -5,12 +5,15 @@ import {Level} from '../.storybook/components/Level';
 import {LevelCircle} from '../.storybook/components/LevelCircle';
 import {LevelPercent} from '../.storybook/components/LevelPercent';
 import {dashboardXML, navxml} from '../Images/AppSvgs';
+import {Context} from '../context';
 
 const Dashboard = () => {
   //current levle new level, coins etc need to get from db
+  const value = useContext(Context);
+
   clString = '';
   nlString = '';
-  currentLevel = 9;
+  currentLevel = 0;
   nextLevel = currentLevel + 1;
   if (currentLevel < 10) {
     clString = clString + '0' + currentLevel;
@@ -23,7 +26,7 @@ const Dashboard = () => {
     nlString = nlString + nextLevel;
   }
 
-  currentCoins = 96000;
+  currentCoins = value.pointsCached;
   nextCoins = (currentLevel + 1) * 10000 - currentCoins;
   nextLevelPercent = (10000 - nextCoins) / 100;
   return (
@@ -66,7 +69,7 @@ const styles = StyleSheet.create({
   coindisplay: {
     position: 'absolute',
     zIndex: 2,
-    top: 10,
+    top: 40,
     left: 5,
     width: '100%',
     height: '100%',
@@ -74,19 +77,19 @@ const styles = StyleSheet.create({
   leveldisplay: {
     zIndex: 2,
     position: 'absolute',
-    top: 10,
-    left: 300,
+    top: 40,
+    right: 20,
   },
   nextlevelcircle: {
     zIndex: 2,
     position: 'absolute',
     top: 330,
-    left: 206,
+    left: 208,
   },
   curlevelcircle: {
     zIndex: 2,
     position: 'absolute',
-    top: 600,
+    top: 590,
     left: 163,
   },
   levelpercentdisplay: {
